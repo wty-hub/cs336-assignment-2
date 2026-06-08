@@ -1,0 +1,4 @@
+small  forward  d_model=768  d_ff=3072  layers=12 heads=12 mean=0.395247 std=0.002717
+small  backward d_model=768  d_ff=3072  layers=12 heads=12 mean=1.202723 std=0.001677
+medium forward  d_model=1024 d_ff=4096  layers=24 heads=16 mean=1.185589 std=0.001903
+medium backward d_model=1024 d_ff=4096  layers=24 heads=16 mean=3.531367 std=0.003909
