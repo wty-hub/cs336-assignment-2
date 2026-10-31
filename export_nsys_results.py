@@ -1,0 +1,193 @@
+"""Export measured timings and kernel statistics without requiring pandas."""
+
+import argparse
+from collections import Counter
+import csv
+import json
+from pathlib import Path
+import re
+
+
+def load(path):
+    return json.loads(path.read_text())
+
+
+def category(name):
+    lower = name.lower()
+    if re.search(r"gemm|gemv|\bbmm|matmul", lower):
+        return "matrix_multiply"
+    if "reduce" in lower or "reduction" in lower:
+        return "reduction"
+    if "copy" in lower:
+        return "copy"
+    if "index" in lower or "gather" in lower or "scatter" in lower:
+        return "index_gather_scatter"
+    if "elementwise" in lower:
+        return "elementwise"
+    return "other"
+
+
+def write_csv(path, rows):
+    if not rows:
+        return
+    with path.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def write_answers(root, rows, timings, comparisons, categories):
+    env = load(root / "environment.json")
+    lines = [
+        "Problem (nsys_profile) 实测结果与答案",
+        "",
+        f"设备：{env['gpu']}，显存 {env['gpu_bytes'] / 1024**3:.2f} GiB；PyTorch {env['torch']}，CUDA {env['cuda']}。",
+        f"Nsight：{env['nsys']}。",
+        f"设置：FP32，batch size 4，词表 10000，预热 {env['warmup_steps']} 步，测量 {env['benchmark_steps']} 步，固定随机种子 10086。",
+        "forward 使用 torch.no_grad；backward 模式包含前向、next-token 交叉熵和反向；train_step 另含仓库提供的 cs336_basics.optimizer.AdamW 更新。",
+        "每步结束均执行 CUDA 同步。baseline 与 profile 使用相同的模型、输入、NVTX 标签和同步方式；baseline 直接运行，不加载 nsys。",
+        "采集由 cudaProfilerStart/Stop 限定在预热结束后的 measure 区间；每份有效报告均核对测量步数、kernel 关联完整性和预热排除情况。",
+        "耗时单位均为 ms/step。wall 为完整同步步骤的经过时间；GPU 时间为 kernel 执行时间之和，不包括空闲间隔、memcpy/memset 事件。",
+        "时间占比的分母是对应范围全部 GPU kernel 的累计时间。NVTX forward 标签本身只包住异步提交，不能直接当作已同步的前向总耗时。",
+        "attention 统计累加全模型各层，仅含 QK^T、softmax 和 P@V 核心，不含 Q/K/V 与输出投影；比较两次矩阵乘法时排除了 attention score 的缩放与 mask kernel。",
+        f"标准差使用 {env['benchmark_steps']} 次测量的总体标准差。近似 FLOPs 比较中，softmax 的 max、减法、exp、求和和除法各按一次标量操作计。",
+        "",
+        f"采集状态：{dict(Counter(row['status'] for row in rows))}，共 {len(rows)} / 60 个配置。",
+        "size  context  forward  forward_loss_backward  train_step",
+    ]
+    combinations = list(dict.fromkeys((r["size"], r["context_length"]) for r in rows))
+    states = {(r["size"], r["context_length"], r["method"]): r["status"] for r in rows}
+    for size, context in combinations:
+        lines.append("  ".join([size, context, *(states.get((size, context, method), "pending") for method in ["forward", "backward", "train_step"])]))
+    lines += ["", "（a）前向总耗时与 Python benchmark 比较", "size  context  baseline_wall_mean  baseline_std  profile_wall_mean  profile_GPU_kernel_sum  wall_change_percent"]
+    for row in comparisons:
+        lines.append(f"{row['size']}  {row['context_length']}  {row['baseline_wall_ms']:.3f}  {row['baseline_wall_std_ms']:.3f}  {row['profile_wall_ms']:.3f}  {row['gpu_kernel_ms']:.3f}  {row['profile_wall_change_percent']:+.2f}%")
+    lines += ["", "（b）累计 GPU 时间最多的 kernel 及单步调用次数", "size  context  mode  top_kernel  calls_per_step  top_kernel_ms_per_step"]
+    for row in timings:
+        prefix = root / f"{row['size'].replace('.', 'p')}_ctx{row['context_length']}_{row['method']}"
+        d = load(Path(str(prefix) + ".analysis.json"))
+        top = d["groups"]["all"]["kernels"][0]
+        lines.append(f"{row['size']}  {row['context_length']}  {row['method']}  {top['name']}  {top['calls_per_step']:g}  {top['gpu_ms_per_step']:.3f}")
+    lines += ["", "（c）前向中矩阵乘法以外的 kernel 时间占比", "size  context  elementwise_percent  reduction_percent  index_gather_scatter_percent  copy_percent  other_percent"]
+    for row in timings:
+        if row["method"] != "forward":
+            continue
+        selected = {r["category"]: r["percent"] for r in categories if r["size"] == row["size"] and r["context_length"] == row["context_length"] and r["method"] == "forward" and r["range"] == "all"}
+        lines.append("  ".join([row["size"], row["context_length"], *(f"{selected.get(name, 0):.2f}" for name in ["elementwise", "reduction", "index_gather_scatter", "copy", "other"])]))
+    lines += ["", "（d）推理与完整训练步骤的矩阵乘法占比", "size  context  inference_matmul_percent  training_matmul_percent  training_optimizer_GPU_ms"]
+    lookup = {(r["size"], r["context_length"], r["method"]): r for r in timings}
+    for size, context in combinations:
+        f = lookup.get((size, context, "forward"))
+        t = lookup.get((size, context, "train_step"))
+        if f and t:
+            lines.append(f"{size}  {context}  {f['gpu_matmul_percent']:.2f}  {t['gpu_matmul_percent']:.2f}  {t['gpu_optimizer_ms']:.3f}")
+    lines += ["", "（e）前向 attention 的 softmax 与两次矩阵乘法", "size  context  softmax_GPU_ms  attention_matmul_GPU_ms  matmul_div_softmax_time  matmul_div_softmax_approx_ops"]
+    for r in timings:
+        if r["method"] == "forward":
+            lines.append(f"{r['size']}  {r['context_length']}  {r['attention_softmax_gpu_ms']:.3f}  {r['attention_matmul_gpu_ms']:.3f}  {r['attention_matmul_to_softmax_time_ratio']:.3f}  {r['attention_matmul_to_softmax_approx_ops_ratio']:.1f}")
+
+    example = lookup.get(("small", "512", "forward"))
+    train = lookup.get(("small", "512", "train_step"))
+    back = lookup.get(("small", "512", "backward"))
+    base = next((r for r in comparisons if r["size"] == "small" and r["context_length"] == "512"), None)
+    if example and train and back and base:
+        nonmm = {r["category"]: r["percent"] for r in categories if r["size"] == "small" and r["context_length"] == "512" and r["method"] == "forward" and r["range"] == "all"}
+        lines += [
+            "", "可用于作业回答的具体示例（small，context 512；跨配置结果见上表）", "",
+            f"（a）前向在 Python benchmark 中为 {base['baseline_wall_ms']:.3f} ± {base['baseline_wall_std_ms']:.3f} ms，Nsight 采集时同步步骤为 {base['profile_wall_ms']:.3f} ms，相差 {base['profile_wall_change_percent']:+.2f}%，基本一致；kernel 累计时间为 {base['gpu_kernel_ms']:.3f} ms，与完整经过时间的口径不同。",
+            f"（b）前向累计耗时最多的是 {example['top_kernel']}，每次前向调用 {example['top_kernel_calls_per_step']:g} 次；前向、loss 和反向一起统计时，最多的是 {back['top_kernel']}，每步调用 {back['top_kernel_calls_per_step']:g} 次，因此主导 kernel 发生变化。",
+            f"（c）前向的逐元素 kernel 占 {nonmm.get('elementwise',0):.2f}%，归约 kernel 占 {nonmm.get('reduction',0):.2f}%，copy kernel 占 {nonmm.get('copy',0):.2f}%；可见 MulFunctor、exp_kernel_cuda、DivFunctor、where_kernel_impl、direct_copy_kernel_cuda 及 reduce_kernel 等。逐元素和归约对应 softmax、RMSNorm、激活、RoPE、mask、缩放及残差等计算；softmax 跨越逐元素和归约两类，不能将其占比再次相加。",
+            f"（d）矩阵乘法占 GPU kernel 时间的比例从仅前向的 {example['gpu_matmul_percent']:.2f}% 降至完整训练的 {train['gpu_matmul_percent']:.2f}%；optimizer 更新新增 {train['gpu_optimizer_ms']:.3f} ms 的 GPU kernel 时间，主要是逐元素操作。",
+            f"（e）attention 的 softmax 为 {example['attention_softmax_gpu_ms']:.3f} ms，两次矩阵乘法合计 {example['attention_matmul_gpu_ms']:.3f} ms，矩阵乘法/softmax 耗时比为 {example['attention_matmul_to_softmax_time_ratio']:.3f}。该配置 head_dim=64，两次矩阵乘法约 4*B*H*N^2*d，softmax 约 5*B*H*N^2 次标量操作，前者约为后者 51.2 倍，耗时却更少；这与 PyTorch softmax 的多次大矩阵读写、归约及较低算术强度相符，FLOPs 不直接决定耗时。",
+        ]
+    lines += [
+        "", "数据与复现", "",
+        "summary.csv：全部配置的采集状态。errors.json 和每个配置的 .log：具体失败证据。",
+        "forward_comparison.csv：相同配置的 Python baseline 与 Nsight 完整前向耗时。",
+        "timings.csv：每个成功配置的总耗时、分阶段 GPU 时间、矩阵乘法占比及 attention 统计。",
+        "kernels.csv：按 NVTX 范围分组的完整 kernel 名称、调用次数和累计耗时。kernel_categories.csv：操作类别汇总。",
+        "*.nsys-rep、*.sqlite：原始 Nsight 报告与导出；*.analysis.json：由 CUDA launch correlation ID 映射至 NVTX 区间的结果。",
+        "环境信息见 environment.json，采集时脚本见 *.snapshot。预装 PyTorch 版本与 pyproject.toml 锁定版本不同，因此本报告仅对该记录环境负责。",
+        "复现：python3 run_nsys_experiments.py --output reports/nsys_profiles/new_run",
+        "导出：python3 export_nsys_results.py reports/nsys_profiles/new_run",
+        "矩阵乘法 kernel 由实际 kernel 名称中的 gemm/gemv/bmm/matmul 识别；其他操作按 kernel 名称分类。完整名称均保存在 kernels.csv，便于复核。",
+        "题目中的 2.7B 是表中配置名称。按当前提供的模型（SwiGLU，d_ff=10240）实际参数约 3.407B，FP32 权重约 12.69 GiB，超过本卡显存；保持题目配置，未缩小模型或 batch size。",
+    ]
+    (root / "answers.txt").write_text("\n".join(lines) + "\n")
+
+
+def export(root):
+    rows = list(csv.DictReader((root / "summary.csv").open()))
+    timings, kernel_rows, categories, comparisons = [], [], [], []
+    for row in rows:
+        prefix = Path(row["output_prefix"])
+        common = {key: row[key] for key in ["size", "context_length", "method", "status"]}
+        if row["status"] != "ok":
+            continue
+        d = load(Path(str(prefix) + ".analysis.json"))
+        t = load(Path(str(prefix) + ".timing.json"))
+        softmax = d["groups"]["computing softmax"]["gpu_ms_per_step"]
+        attention_mm = sum(d["groups"][name]["matmul_ms_per_step"] for name in ["computing attention scores", "final matmul"])
+        timings.append({
+            **common,
+            "profile_wall_ms": t["mean_seconds"] * 1000,
+            "profile_wall_std_ms": t["std_seconds"] * 1000,
+            "nvtx_step_wall_ms": d["step_wall_mean_ms"],
+            "gpu_kernel_ms": d["groups"]["all"]["gpu_ms_per_step"],
+            "gpu_forward_ms": d["groups"]["forward"]["gpu_ms_per_step"],
+            "gpu_loss_ms": d["groups"]["loss"]["gpu_ms_per_step"],
+            "gpu_backward_ms": d["groups"]["backward"]["gpu_ms_per_step"],
+            "gpu_optimizer_ms": d["groups"]["optimizer_step"]["gpu_ms_per_step"],
+            "gpu_matmul_ms": d["groups"]["all"]["matmul_ms_per_step"],
+            "gpu_matmul_percent": d["groups"]["all"]["matmul_percent"],
+            "attention_softmax_gpu_ms": softmax,
+            "attention_matmul_gpu_ms": attention_mm,
+            "attention_matmul_to_softmax_time_ratio": attention_mm / softmax,
+            "attention_matmul_to_softmax_approx_ops_ratio": 4 * (t["config"]["d_model"] // t["config"]["num_heads"]) / 5,
+            "top_kernel": d["groups"]["all"]["kernels"][0]["name"],
+            "top_kernel_calls_per_step": d["groups"]["all"]["kernels"][0]["calls_per_step"],
+            "peak_allocated_gib": t["peak_allocated_bytes"] / 1024**3,
+            "parameters": t["parameter_count"],
+        })
+        if row["method"] == "forward":
+            b = load(Path(str(prefix) + ".baseline.json"))
+            comparisons.append({
+                **common, "baseline_wall_ms": b["mean_seconds"] * 1000,
+                "baseline_wall_std_ms": b["std_seconds"] * 1000,
+                "profile_wall_ms": t["mean_seconds"] * 1000,
+                "nvtx_step_wall_ms": d["step_wall_mean_ms"],
+                "gpu_kernel_ms": d["groups"]["all"]["gpu_ms_per_step"],
+                "profile_wall_change_percent": (t["mean_seconds"] / b["mean_seconds"] - 1) * 100,
+            })
+        for group, stats in d["groups"].items():
+            totals = {}
+            for kernel in stats["kernels"]:
+                kind = category(kernel["name"])
+                totals[kind] = totals.get(kind, 0) + kernel["gpu_ms_per_step"]
+                kernel_rows.append({**common, "range": group, **kernel, "category": kind})
+            for kind, ms in totals.items():
+                categories.append({**common, "range": group, "category": kind, "gpu_ms_per_step": ms,
+                                   "percent": ms / stats["gpu_ms_per_step"] * 100})
+    write_csv(root / "timings.csv", timings)
+    write_csv(root / "forward_comparison.csv", comparisons)
+    write_csv(root / "kernels.csv", kernel_rows)
+    write_csv(root / "kernel_categories.csv", categories)
+    # Capture the exact reason for each failure, rather than inferring OOM.
+    errors = []
+    for row in rows:
+        if row["status"] == "ok":
+            continue
+        log = Path(row["output_prefix"] + ".log").read_text(errors="replace")
+        messages = [line for line in log.splitlines() if "OutOfMemoryError:" in line or "Error:" in line]
+        errors.append({**row, "message": "\n".join(messages[-3:])})
+    (root / "errors.json").write_text(json.dumps(errors, indent=2) + "\n")
+    write_answers(root, rows, timings, comparisons, categories)
+    return timings, comparisons, categories
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("directory", type=Path)
+    args = parser.parse_args()
+    data = export(args.directory)
+    print(f"Exported {len(data[0])} profiles and {len(data[1])} forward comparisons to {args.directory}")

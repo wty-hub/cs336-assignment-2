@@ -9,9 +9,10 @@ set -euo pipefail
 # -----------------------------
 # User-tunable settings
 # -----------------------------
-NSYS_BIN="${NSYS_BIN:-/usr/local/cuda/bin/nsys}"
-PYTHON_RUNNER="${PYTHON_RUNNER:-uv run python}"
+NSYS_BIN="${NSYS_BIN:-$(command -v nsys || echo /opt/nvidia/nsight-compute/2025.1.1/host/target-linux-x64/nsys)}"
+PYTHON_RUNNER="${PYTHON_RUNNER:-python3}"
 SCRIPT_PATH="${SCRIPT_PATH:-run_benchmark.py}"
+export PYTHONPATH="$(pwd)/cs336-basics${PYTHONPATH:+:${PYTHONPATH}}"
 
 WARMUP_STEPS="${WARMUP_STEPS:-5}"
 BENCHMARK_STEPS="${BENCHMARK_STEPS:-10}"
@@ -21,7 +22,7 @@ DEVICE="${DEVICE:-cuda}"
 OUTPUT_ROOT="${OUTPUT_ROOT:-reports/nsys_profiles}"
 SUMMARY_CSV="${SUMMARY_CSV:-${OUTPUT_ROOT}/summary.csv}"
 
-TRACE_FLAGS="${TRACE_FLAGS:---trace=cuda,nvtx,osrt --sample=none --capture-range=nvtx --capture-range-end=stop}"
+TRACE_FLAGS="${TRACE_FLAGS:---trace=cuda,nvtx,osrt --sample=none --cpuctxsw=none --capture-range=cudaProfilerApi --capture-range-end=stop --export=sqlite}"
 
 # If 1, continue to next config on errors (recommended for OOM cases).
 CONTINUE_ON_ERROR="${CONTINUE_ON_ERROR:-1}"
@@ -78,7 +79,7 @@ run_one_case() {
       --num_layers "${num_layers}" \
       --num_heads "${num_heads}" \
       --device "${DEVICE}" \
-      --annotate_attention > "${log_file}" 2>&1; then
+      --annotate_attention --profile --json_output "${prefix}.timing.json" > "${log_file}" 2>&1; then
     echo "[OK ] ${prefix}.nsys-rep"
     printf "%s,%s,%s,%s,ok,%s,%s\n" \
       "$(date -Iseconds)" "${size}" "${context_length}" "${method}" "${prefix}" "${log_file}" >> "${SUMMARY_CSV}"

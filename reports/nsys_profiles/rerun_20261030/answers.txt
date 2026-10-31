@@ -1,0 +1,152 @@
+Problem (nsys_profile) 实测结果与答案
+
+设备：NVIDIA GeForce RTX 2080 Ti，显存 10.57 GiB；PyTorch 2.8.0+cu128，CUDA 12.8。
+Nsight：NVIDIA Nsight Systems version 2025.1.1.0。
+设置：FP32，batch size 4，词表 10000，预热 5 步，测量 10 步，固定随机种子 10086。
+forward 使用 torch.no_grad；backward 模式包含前向、next-token 交叉熵和反向；train_step 另含仓库提供的 cs336_basics.optimizer.AdamW 更新。
+每步结束均执行 CUDA 同步。baseline 与 profile 使用相同的模型、输入、NVTX 标签和同步方式；baseline 直接运行，不加载 nsys。
+采集由 cudaProfilerStart/Stop 限定在预热结束后的 measure 区间；每份有效报告均核对测量步数、kernel 关联完整性和预热排除情况。
+耗时单位均为 ms/step。wall 为完整同步步骤的经过时间；GPU 时间为 kernel 执行时间之和，不包括空闲间隔、memcpy/memset 事件。
+时间占比的分母是对应范围全部 GPU kernel 的累计时间。NVTX forward 标签本身只包住异步提交，不能直接当作已同步的前向总耗时。
+attention 统计累加全模型各层，仅含 QK^T、softmax 和 P@V 核心，不含 Q/K/V 与输出投影；比较两次矩阵乘法时排除了 attention score 的缩放与 mask kernel。
+标准差使用 10 次测量的总体标准差。近似 FLOPs 比较中，softmax 的 max、减法、exp、求和和除法各按一次标量操作计。
+
+采集状态：{'ok': 28, 'oom': 32}，共 60 / 60 个配置。
+size  context  forward  forward_loss_backward  train_step
+small  128  ok  ok  ok
+small  256  ok  ok  ok
+small  512  ok  ok  ok
+small  1024  ok  ok  oom
+medium  128  ok  ok  ok
+medium  256  ok  ok  ok
+medium  512  ok  oom  oom
+medium  1024  ok  oom  oom
+large  128  ok  ok  oom
+large  256  ok  oom  oom
+large  512  ok  oom  oom
+large  1024  ok  oom  oom
+xl  128  ok  oom  oom
+xl  256  ok  oom  oom
+xl  512  ok  oom  oom
+xl  1024  ok  oom  oom
+2.7B  128  oom  oom  oom
+2.7B  256  oom  oom  oom
+2.7B  512  oom  oom  oom
+2.7B  1024  oom  oom  oom
+
+（a）前向总耗时与 Python benchmark 比较
+size  context  baseline_wall_mean  baseline_std  profile_wall_mean  profile_GPU_kernel_sum  wall_change_percent
+small  128  37.292  0.193  46.539  17.073  +24.80%
+small  256  39.401  0.500  47.572  30.903  +20.74%
+small  512  77.790  0.909  77.389  74.325  -0.51%
+small  1024  185.514  0.887  185.617  183.749  +0.06%
+medium  128  76.969  1.776  90.138  43.998  +17.11%
+medium  256  112.160  1.323  111.551  107.510  -0.54%
+medium  512  231.603  2.210  232.053  229.167  +0.19%
+medium  1024  552.723  1.910  556.242  554.612  +0.64%
+large  128  123.600  1.439  137.219  115.922  +11.02%
+large  256  242.376  1.522  244.293  238.403  +0.79%
+large  512  510.864  1.361  514.954  511.804  +0.80%
+large  1024  1164.656  3.221  1170.893  1168.714  +0.54%
+xl  128  234.548  1.054  235.567  230.493  +0.43%
+xl  256  478.607  1.830  482.766  478.751  +0.87%
+xl  512  1014.676  3.014  1028.730  1025.404  +1.39%
+xl  1024  2275.743  4.937  2295.476  2291.652  +0.87%
+
+（b）累计 GPU 时间最多的 kernel 及单步调用次数
+size  context  mode  top_kernel  calls_per_step  top_kernel_ms_per_step
+small  128  forward  volta_sgemm_128x64_tn  36  8.203
+small  128  backward  volta_sgemm_128x64_nn  85  10.230
+small  128  train_step  void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<float>, std::array<char *, (unsigned long)3>>(int, T2, T3)  675  12.360
+small  256  forward  volta_sgemm_128x128_tn  25  10.362
+small  256  backward  volta_sgemm_128x64_nt  84  20.268
+small  256  train_step  volta_sgemm_128x64_nt  84  19.804
+small  512  forward  volta_sgemm_128x128_tn  25  22.340
+small  512  backward  volta_sgemm_128x64_nn  85  42.039
+small  512  train_step  volta_sgemm_128x64_nn  85  41.442
+small  1024  forward  volta_sgemm_128x128_tn  61  44.942
+small  1024  backward  volta_sgemm_128x64_nn  84  76.544
+medium  128  forward  volta_sgemm_128x64_tn  120  17.219
+medium  128  backward  volta_sgemm_128x64_nn  169  35.411
+medium  128  train_step  void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<float>, std::array<char *, (unsigned long)3>>(int, T2, T3)  1335  41.418
+medium  256  forward  volta_sgemm_128x64_tn  120  39.654
+medium  256  backward  volta_sgemm_128x64_nn  145  57.208
+medium  256  train_step  volta_sgemm_128x64_nn  145  56.664
+medium  512  forward  volta_sgemm_128x128_tn  169  146.881
+medium  1024  forward  volta_sgemm_128x128_tn  169  289.104
+large  128  forward  volta_sgemm_128x64_tn  252  93.512
+large  128  backward  volta_sgemm_128x64_tn  252  89.042
+large  256  forward  volta_sgemm_128x64_tn  180  93.235
+large  512  forward  volta_sgemm_128x128_tn  109  264.487
+large  1024  forward  volta_sgemm_128x128_tn  253  674.578
+xl  128  forward  volta_sgemm_128x128_tn  337  193.654
+xl  256  forward  volta_sgemm_128x128_tn  337  385.580
+xl  512  forward  volta_sgemm_128x128_tn  145  557.686
+xl  1024  forward  volta_sgemm_128x128_tn  337  1462.340
+
+（c）前向中矩阵乘法以外的 kernel 时间占比
+size  context  elementwise_percent  reduction_percent  index_gather_scatter_percent  copy_percent  other_percent
+small  128  17.58  2.42  1.29  2.18  0.00
+small  256  24.27  3.18  0.71  2.36  0.00
+small  512  28.33  3.71  0.35  2.80  0.00
+small  1024  35.14  5.17  0.16  2.30  0.00
+medium  128  16.71  2.03  0.91  2.00  0.00
+medium  256  19.41  2.27  0.46  2.39  0.00
+medium  512  24.37  3.16  0.23  2.45  0.00
+medium  1024  30.90  4.49  0.10  2.08  0.00
+large  128  12.71  1.63  0.58  1.48  0.00
+large  256  16.42  1.83  0.31  2.17  0.00
+large  512  20.39  2.62  0.15  2.09  0.00
+large  1024  27.44  3.95  0.07  1.86  0.00
+xl  128  11.35  1.35  0.42  1.41  0.00
+xl  256  13.56  1.48  0.21  1.83  0.00
+xl  512  16.87  2.14  0.10  1.74  0.00
+xl  1024  23.30  3.33  0.05  1.60  0.00
+
+（d）推理与完整训练步骤的矩阵乘法占比
+size  context  inference_matmul_percent  training_matmul_percent  training_optimizer_GPU_ms
+small  128  76.54  41.09  32.406
+small  256  69.49  49.31  32.450
+small  512  64.82  53.34  32.442
+medium  128  78.35  41.48  109.002
+medium  256  75.47  52.85  108.932
+
+（e）前向 attention 的 softmax 与两次矩阵乘法
+size  context  softmax_GPU_ms  attention_matmul_GPU_ms  matmul_div_softmax_time  matmul_div_softmax_approx_ops
+small  128  0.560  0.530  0.945  51.2
+small  256  2.493  1.274  0.511  51.2
+small  512  9.167  4.885  0.533  51.2
+small  1024  35.677  20.796  0.583  51.2
+medium  128  1.560  1.052  0.675  51.2
+medium  256  6.562  3.486  0.531  51.2
+medium  512  24.213  13.073  0.540  51.2
+medium  1024  94.938  57.147  0.602  51.2
+large  128  3.429  2.107  0.615  51.2
+large  256  12.094  6.711  0.555  51.2
+large  512  45.205  25.634  0.567  51.2
+large  1024  177.672  104.729  0.589  51.2
+xl  128  5.907  3.337  0.565  51.2
+xl  256  19.866  11.358  0.572  51.2
+xl  512  75.065  42.735  0.569  51.2
+xl  1024  295.876  181.343  0.613  51.2
+
+可用于作业回答的具体示例（small，context 512；跨配置结果见上表）
+
+（a）前向在 Python benchmark 中为 77.790 ± 0.909 ms，Nsight 采集时同步步骤为 77.389 ms，相差 -0.51%，基本一致；kernel 累计时间为 74.325 ms，与完整经过时间的口径不同。
+（b）前向累计耗时最多的是 volta_sgemm_128x128_tn，每次前向调用 25 次；前向、loss 和反向一起统计时，最多的是 volta_sgemm_128x64_nn，每步调用 85 次，因此主导 kernel 发生变化。
+（c）前向的逐元素 kernel 占 28.33%，归约 kernel 占 3.71%，copy kernel 占 2.80%；可见 MulFunctor、exp_kernel_cuda、DivFunctor、where_kernel_impl、direct_copy_kernel_cuda 及 reduce_kernel 等。逐元素和归约对应 softmax、RMSNorm、激活、RoPE、mask、缩放及残差等计算；softmax 跨越逐元素和归约两类，不能将其占比再次相加。
+（d）矩阵乘法占 GPU kernel 时间的比例从仅前向的 64.82% 降至完整训练的 53.34%；optimizer 更新新增 32.442 ms 的 GPU kernel 时间，主要是逐元素操作。
+（e）attention 的 softmax 为 9.167 ms，两次矩阵乘法合计 4.885 ms，矩阵乘法/softmax 耗时比为 0.533。该配置 head_dim=64，两次矩阵乘法约 4*B*H*N^2*d，softmax 约 5*B*H*N^2 次标量操作，前者约为后者 51.2 倍，耗时却更少；这与 PyTorch softmax 的多次大矩阵读写、归约及较低算术强度相符，FLOPs 不直接决定耗时。
+
+数据与复现
+
+summary.csv：全部配置的采集状态。errors.json 和每个配置的 .log：具体失败证据。
+forward_comparison.csv：相同配置的 Python baseline 与 Nsight 完整前向耗时。
+timings.csv：每个成功配置的总耗时、分阶段 GPU 时间、矩阵乘法占比及 attention 统计。
+kernels.csv：按 NVTX 范围分组的完整 kernel 名称、调用次数和累计耗时。kernel_categories.csv：操作类别汇总。
+*.nsys-rep、*.sqlite：原始 Nsight 报告与导出；*.analysis.json：由 CUDA launch correlation ID 映射至 NVTX 区间的结果。
+环境信息见 environment.json，采集时脚本见 *.snapshot。预装 PyTorch 版本与 pyproject.toml 锁定版本不同，因此本报告仅对该记录环境负责。
+复现：python3 run_nsys_experiments.py --output reports/nsys_profiles/new_run
+导出：python3 export_nsys_results.py reports/nsys_profiles/new_run
+矩阵乘法 kernel 由实际 kernel 名称中的 gemm/gemv/bmm/matmul 识别；其他操作按 kernel 名称分类。完整名称均保存在 kernels.csv，便于复核。
+题目中的 2.7B 是表中配置名称。按当前提供的模型（SwiGLU，d_ff=10240）实际参数约 3.407B，FP32 权重约 12.69 GiB，超过本卡显存；保持题目配置，未缩小模型或 batch size。

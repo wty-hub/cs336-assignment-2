@@ -2,6 +2,11 @@
 cs336-spring2024-assignment-2-submission.zip
 test_results.xml
 
+# Keep raw profiler captures locally; commit exported statistics and answers.
+reports/nsys_profiles/**/*.nsys-rep
+reports/nsys_profiles/**/*.sqlite
+reports/nsys_profiles/preflight/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

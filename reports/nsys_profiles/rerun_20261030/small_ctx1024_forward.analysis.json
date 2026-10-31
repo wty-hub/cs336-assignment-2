@@ -1,0 +1,723 @@
+{
+  "database": "reports/nsys_profiles/rerun_20261030/small_ctx1024_forward.sqlite",
+  "steps": 10,
+  "captured_kernel_count": 8360,
+  "unmatched_kernel_count": 0,
+  "kernels_outside_measure": 0,
+  "warmup_captured": false,
+  "groups": {
+    "all": {
+      "kernel_count": 8360,
+      "gpu_ms_per_step": 183.7489342,
+      "matmul_ms_per_step": 105.15147300000001,
+      "matmul_percent": 57.225623352758475,
+      "kernels": [
+        {
+          "name": "volta_sgemm_128x128_tn",
+          "calls": 610,
+          "calls_per_step": 61.0,
+          "gpu_ms_per_step": 44.9422158,
+          "percent": 24.458490600594732,
+          "is_matmul": true
+        },
+        {
+          "name": "volta_sgemm_128x64_tn",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 39.4136252,
+          "percent": 21.449716359769774,
+          "is_matmul": true
+        },
+        {
+          "name": "volta_sgemm_64x64_nn",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 11.5791066,
+          "percent": 6.301591163188363,
+          "is_matmul": true
+        },
+        {
+          "name": "volta_sgemm_64x64_tn",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.2165254,
+          "percent": 5.015825229205602,
+          "is_matmul": true
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.1260471,
+          "percent": 4.966585052442715,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::exp_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 2)]::operator ()() const::[lambda() (instance 2)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.1245497,
+          "percent": 4.965770136151353,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.9856589,
+          "percent": 4.890182867792656,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.902099699999999,
+          "percent": 4.84470820946944,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::<unnamed>::where_kernel_impl(at::TensorIterator &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 11)]::operator ()() const::[lambda(bool, float, float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.476629800000001,
+          "percent": 4.613158621520864,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, std::array<char *, (unsigned long)3>>(int, T2, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 6.6206856,
+          "percent": 3.6031151031296704,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 1460,
+          "calls_per_step": 146.0,
+          "gpu_ms_per_step": 5.9498677,
+          "percent": 3.2380420196200514,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::MaxOps<float>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 4.3731682,
+          "percent": 2.3799692874626754,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 4.2918291,
+          "percent": 2.3357028538345666,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 7)]::operator ()() const::[lambda(float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 720,
+          "calls_per_step": 72.0,
+          "gpu_ms_per_step": 4.2344437,
+          "percent": 2.304472523030286,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<float>, std::array<char *, (unsigned long)3>>(int, T2, T3)",
+          "calls": 720,
+          "calls_per_step": 72.0,
+          "gpu_ms_per_step": 3.3953940000000005,
+          "percent": 1.8478441873868565,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::sigmoid_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 2)]::operator ()() const::[lambda() (instance 2)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 2.2639155,
+          "percent": 1.2320700034841345,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, void at::native::<unnamed>::pow_tensor_scalar_kernel_impl<float, float>(at::TensorIteratorBase &, T2)::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 1.1963945,
+          "percent": 0.6511028241925987,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 0.8319428,
+          "percent": 0.45276061252931066,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl<at::native::CUDAFunctor_add<long>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 480,
+          "calls_per_step": 48.0,
+          "gpu_ms_per_step": 0.2642354,
+          "percent": 0.1438024123244139,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void at::native::index_kernel_impl<at::native::OpaqueType<(int)4>>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>)::[lambda(char *, const char *, long) (instance 1)]>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>, const T1 &, bool)::[lambda(int) (instance 1)]>(long, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.150587,
+          "percent": 0.08195258419082574,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::<unnamed>::CompareFunctor<long>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 0.0912614,
+          "percent": 0.04966635610559095,
+          "is_matmul": false
+        },
+        {
+          "name": "void <unnamed>::elementwise_kernel_with_index<int, at::native::arange_cuda_out(const c10::Scalar &, const c10::Scalar &, const c10::Scalar &, at::Tensor &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(long) (instance 1)]>(T1, T2, function_traits<T2>::result_type *)",
+          "calls": 480,
+          "calls_per_step": 48.0,
+          "gpu_ms_per_step": 0.058551,
+          "percent": 0.03186467461970182,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_gather_kernel<(int)16, long>(char *, char *, T2 *, int, long, long, long, long, bool)",
+          "calls": 10,
+          "calls_per_step": 1.0,
+          "gpu_ms_per_step": 0.0472293,
+          "percent": 0.025703169493540387,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 0.045334799999999995,
+          "percent": 0.02467214310514352,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 2)]::operator ()() const::[lambda() (instance 2)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 0.0407266,
+          "percent": 0.022164264613187618,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)2, at::native::AUnaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long>>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.0365249,
+          "percent": 0.019877611894197317,
+          "is_matmul": false
+        },
+        {
+          "name": "void <unnamed>::elementwise_kernel_with_index<int, at::native::arange_cuda_out(const c10::Scalar &, const c10::Scalar &, const c10::Scalar &, at::Tensor &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 4)]::operator ()() const::[lambda(long) (instance 1)]>(T1, T2, function_traits<T2>::result_type *)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.0360961,
+          "percent": 0.019644249996417125,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<int, int, int, at::native::binary_internal::MulFunctor<int>>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.0358147,
+          "percent": 0.01949110625099887,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, std::array<char *, (unsigned long)1>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 0.018473700000000003,
+          "percent": 0.010053772600331088,
+          "is_matmul": false
+        }
+      ]
+    },
+    "forward": {
+      "kernel_count": 8360,
+      "gpu_ms_per_step": 183.7489342,
+      "matmul_ms_per_step": 105.15147300000001,
+      "matmul_percent": 57.225623352758475,
+      "kernels": [
+        {
+          "name": "volta_sgemm_128x128_tn",
+          "calls": 610,
+          "calls_per_step": 61.0,
+          "gpu_ms_per_step": 44.9422158,
+          "percent": 24.458490600594732,
+          "is_matmul": true
+        },
+        {
+          "name": "volta_sgemm_128x64_tn",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 39.4136252,
+          "percent": 21.449716359769774,
+          "is_matmul": true
+        },
+        {
+          "name": "volta_sgemm_64x64_nn",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 11.5791066,
+          "percent": 6.301591163188363,
+          "is_matmul": true
+        },
+        {
+          "name": "volta_sgemm_64x64_tn",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.2165254,
+          "percent": 5.015825229205602,
+          "is_matmul": true
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.1260471,
+          "percent": 4.966585052442715,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::exp_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 2)]::operator ()() const::[lambda() (instance 2)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.1245497,
+          "percent": 4.965770136151353,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.9856589,
+          "percent": 4.890182867792656,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.902099699999999,
+          "percent": 4.84470820946944,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::<unnamed>::where_kernel_impl(at::TensorIterator &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 11)]::operator ()() const::[lambda(bool, float, float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.476629800000001,
+          "percent": 4.613158621520864,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, std::array<char *, (unsigned long)3>>(int, T2, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 6.6206856,
+          "percent": 3.6031151031296704,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 1460,
+          "calls_per_step": 146.0,
+          "gpu_ms_per_step": 5.9498677,
+          "percent": 3.2380420196200514,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::MaxOps<float>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 4.3731682,
+          "percent": 2.3799692874626754,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 4.2918291,
+          "percent": 2.3357028538345666,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 7)]::operator ()() const::[lambda(float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 720,
+          "calls_per_step": 72.0,
+          "gpu_ms_per_step": 4.2344437,
+          "percent": 2.304472523030286,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<float>, std::array<char *, (unsigned long)3>>(int, T2, T3)",
+          "calls": 720,
+          "calls_per_step": 72.0,
+          "gpu_ms_per_step": 3.3953940000000005,
+          "percent": 1.8478441873868565,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::sigmoid_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 2)]::operator ()() const::[lambda() (instance 2)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 2.2639155,
+          "percent": 1.2320700034841345,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, void at::native::<unnamed>::pow_tensor_scalar_kernel_impl<float, float>(at::TensorIteratorBase &, T2)::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 1.1963945,
+          "percent": 0.6511028241925987,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 0.8319428,
+          "percent": 0.45276061252931066,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl<at::native::CUDAFunctor_add<long>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 480,
+          "calls_per_step": 48.0,
+          "gpu_ms_per_step": 0.2642354,
+          "percent": 0.1438024123244139,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void at::native::index_kernel_impl<at::native::OpaqueType<(int)4>>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>)::[lambda(char *, const char *, long) (instance 1)]>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>, const T1 &, bool)::[lambda(int) (instance 1)]>(long, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.150587,
+          "percent": 0.08195258419082574,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::<unnamed>::CompareFunctor<long>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 0.0912614,
+          "percent": 0.04966635610559095,
+          "is_matmul": false
+        },
+        {
+          "name": "void <unnamed>::elementwise_kernel_with_index<int, at::native::arange_cuda_out(const c10::Scalar &, const c10::Scalar &, const c10::Scalar &, at::Tensor &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(long) (instance 1)]>(T1, T2, function_traits<T2>::result_type *)",
+          "calls": 480,
+          "calls_per_step": 48.0,
+          "gpu_ms_per_step": 0.058551,
+          "percent": 0.03186467461970182,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_gather_kernel<(int)16, long>(char *, char *, T2 *, int, long, long, long, long, bool)",
+          "calls": 10,
+          "calls_per_step": 1.0,
+          "gpu_ms_per_step": 0.0472293,
+          "percent": 0.025703169493540387,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 0.045334799999999995,
+          "percent": 0.02467214310514352,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 2)]::operator ()() const::[lambda() (instance 2)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 250,
+          "calls_per_step": 25.0,
+          "gpu_ms_per_step": 0.0407266,
+          "percent": 0.022164264613187618,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)2, at::native::AUnaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long>>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.0365249,
+          "percent": 0.019877611894197317,
+          "is_matmul": false
+        },
+        {
+          "name": "void <unnamed>::elementwise_kernel_with_index<int, at::native::arange_cuda_out(const c10::Scalar &, const c10::Scalar &, const c10::Scalar &, at::Tensor &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 4)]::operator ()() const::[lambda(long) (instance 1)]>(T1, T2, function_traits<T2>::result_type *)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.0360961,
+          "percent": 0.019644249996417125,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<int, int, int, at::native::binary_internal::MulFunctor<int>>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 240,
+          "calls_per_step": 24.0,
+          "gpu_ms_per_step": 0.0358147,
+          "percent": 0.01949110625099887,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, std::array<char *, (unsigned long)1>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 0.018473700000000003,
+          "percent": 0.010053772600331088,
+          "is_matmul": false
+        }
+      ]
+    },
+    "loss": {
+      "kernel_count": 0,
+      "gpu_ms_per_step": 0.0,
+      "matmul_ms_per_step": 0.0,
+      "matmul_percent": 0,
+      "kernels": []
+    },
+    "backward": {
+      "kernel_count": 0,
+      "gpu_ms_per_step": 0.0,
+      "matmul_ms_per_step": 0.0,
+      "matmul_percent": 0,
+      "kernels": []
+    },
+    "optimizer_step": {
+      "kernel_count": 0,
+      "gpu_ms_per_step": 0.0,
+      "matmul_ms_per_step": 0.0,
+      "matmul_percent": 0,
+      "kernels": []
+    },
+    "zero_grad": {
+      "kernel_count": 0,
+      "gpu_ms_per_step": 0.0,
+      "matmul_ms_per_step": 0.0,
+      "matmul_percent": 0,
+      "kernels": []
+    },
+    "computing attention scores": {
+      "kernel_count": 480,
+      "gpu_ms_per_step": 26.837676,
+      "matmul_ms_per_step": 9.2165254,
+      "matmul_percent": 34.341741811027156,
+      "kernels": [
+        {
+          "name": "volta_sgemm_64x64_tn",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.2165254,
+          "percent": 34.341741811027156,
+          "is_matmul": true
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::BUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.1260471,
+          "percent": 34.004610160730756,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::<unnamed>::where_kernel_impl(at::TensorIterator &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 11)]::operator ()() const::[lambda(bool, float, float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.476629800000001,
+          "percent": 31.584813081430745,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<float>, std::array<char *, (unsigned long)1>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 0.018473700000000003,
+          "percent": 0.06883494681134089,
+          "is_matmul": false
+        }
+      ]
+    },
+    "computing softmax": {
+      "kernel_count": 600,
+      "gpu_ms_per_step": 35.6773056,
+      "matmul_ms_per_step": 0.0,
+      "matmul_percent": 0.0,
+      "kernels": [
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::exp_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 2)]::operator ()() const::[lambda() (instance 2)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 9.1245497,
+          "percent": 25.575220848516096,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.9856589,
+          "percent": 25.1859235132375,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<float>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 8.902099699999999,
+          "percent": 24.951715243877608,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::MaxOps<float>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 4.3731682,
+          "percent": 12.257562970226092,
+          "is_matmul": false
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4, (int)4>>(T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 4.2918291,
+          "percent": 12.029577424142703,
+          "is_matmul": false
+        }
+      ]
+    },
+    "final matmul": {
+      "kernel_count": 240,
+      "gpu_ms_per_step": 12.1741095,
+      "matmul_ms_per_step": 11.5791066,
+      "matmul_percent": 95.11255504971432,
+      "kernels": [
+        {
+          "name": "volta_sgemm_64x64_nn",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 11.5791066,
+          "percent": 95.1125550497143,
+          "is_matmul": true
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 7)]::operator ()() const::[lambda(float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 120,
+          "calls_per_step": 12.0,
+          "gpu_ms_per_step": 0.5950029,
+          "percent": 4.887444950285686,
+          "is_matmul": false
+        }
+      ]
+    }
+  },
+  "nvtx_ranges": {
+    "measure": {
+      "count": 1,
+      "cpu_ms_per_step": 185.620611
+    },
+    "forward": {
+      "count": 10,
+      "cpu_ms_per_step": 46.1972358
+    },
+    "loss": {
+      "count": 0,
+      "cpu_ms_per_step": 0.0
+    },
+    "backward": {
+      "count": 0,
+      "cpu_ms_per_step": 0.0
+    },
+    "optimizer_step": {
+      "count": 0,
+      "cpu_ms_per_step": 0.0
+    },
+    "zero_grad": {
+      "count": 0,
+      "cpu_ms_per_step": 0.0
+    },
+    "computing attention scores": {
+      "count": 120,
+      "cpu_ms_per_step": 2.4373487999999996
+    },
+    "computing softmax": {
+      "count": 120,
+      "cpu_ms_per_step": 1.5205346
+    },
+    "final matmul": {
+      "count": 120,
+      "cpu_ms_per_step": 1.4360719
+    }
+  },
+  "step_wall_ms": [
+    178.87942,
+    186.537634,
+    186.200632,
+    187.452576,
+    185.092253,
+    186.4995,
+    187.050311,
+    185.706369,
+    186.176551,
+    186.115064
+  ],
+  "step_wall_mean_ms": 185.571031,
+  "per_step": {
+    "step_0": {
+      "kernel_count": 836,
+      "gpu_ns": 176757440
+    },
+    "step_1": {
+      "kernel_count": 836,
+      "gpu_ns": 184669536
+    },
+    "step_2": {
+      "kernel_count": 836,
+      "gpu_ns": 184422398
+    },
+    "step_3": {
+      "kernel_count": 836,
+      "gpu_ns": 185683467
+    },
+    "step_4": {
+      "kernel_count": 836,
+      "gpu_ns": 183380404
+    },
+    "step_5": {
+      "kernel_count": 836,
+      "gpu_ns": 184701636
+    },
+    "step_6": {
+      "kernel_count": 836,
+      "gpu_ns": 185202468
+    },
+    "step_7": {
+      "kernel_count": 836,
+      "gpu_ns": 183864476
+    },
+    "step_8": {
+      "kernel_count": 836,
+      "gpu_ns": 184423008
+    },
+    "step_9": {
+      "kernel_count": 836,
+      "gpu_ns": 184384509
+    }
+  }
+}

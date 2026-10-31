@@ -1,7 +1,10 @@
 # run_benchmark.py
 
 import argparse
+import json
 import math
+from pathlib import Path
+import statistics
 import timeit
 
 import cs336_basics.model as model_module
@@ -10,12 +13,16 @@ import torch.cuda.nvtx as nvtx
 from einops import einsum
 
 from cs336_basics.model import BasicsTransformerLM
-from cs336_basics.nn_utils import softmax
+from cs336_basics.nn_utils import cross_entropy, softmax
+from cs336_basics.optimizer import AdamW
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, default=10086)
+    parser.add_argument("--json_output", type=Path)
+    parser.add_argument("--profile", action="store_true", help="Capture only measured steps with the CUDA profiler API")
+    parser.add_argument("--cpu_threads", type=int, default=4)
     # 预热步数
     parser.add_argument("--warmup_steps", type=int, default=10)
     # 规定的参数：基准测试方法
@@ -102,60 +109,99 @@ def generate_random_batch(batch_size, context_length, device: torch.device):
     return torch.randint(0, 10000, (batch_size, context_length), device=device)
 
 
-def run_step(model, batch, benchmark_method, optimizer=None):
+def run_step(model, batch, benchmark_method, optimizer=None, targets=None):
     if benchmark_method == "forward":
-        with nvtx.range("forward"):
+        with torch.no_grad(), nvtx.range("forward"):
             model(batch)
-    elif benchmark_method == "backward":
-        with nvtx.range("forward"):
-            output = model(batch)
-        with nvtx.range("backward"):
-            output.mean().backward()
-        model.zero_grad(set_to_none=True)
-    elif benchmark_method == "train_step":
-        if optimizer is None:
+    elif benchmark_method in {"backward", "train_step"}:
+        if targets is None:
+            raise ValueError("targets are required for cross-entropy loss")
+        if benchmark_method == "train_step" and optimizer is None:
             raise ValueError("optimizer is required for train_step")
         with nvtx.range("forward"):
             output = model(batch)
+        with nvtx.range("loss"):
+            loss = cross_entropy(output, targets)
         with nvtx.range("backward"):
-            output.mean().backward()
-        with nvtx.range("optimizer_step"):
-            optimizer.step()
-        optimizer.zero_grad(set_to_none=True)
+            loss.backward()
+        if benchmark_method == "train_step":
+            with nvtx.range("optimizer_step"):
+                optimizer.step()
+        with nvtx.range("zero_grad"):
+            model.zero_grad(set_to_none=True)
     else:
         raise ValueError(f"Unknown benchmark_method: {benchmark_method}")
 
 
 if __name__ == "__main__":
     args = parse_args()
+    if args.warmup_steps < 0 or args.benchmark_steps < 1:
+        raise ValueError("warmup_steps must be nonnegative and benchmark_steps must be positive")
+    torch.set_num_threads(args.cpu_threads)
+    torch.manual_seed(args.seed)
     device = resolve_device(args.device)
 
     if args.annotate_attention:
         model_module.scaled_dot_product_attention = annotated_scaled_dot_product_attention
 
-    model = get_model(args).to(device)
+    # Initialize directly on the requested device, including large configurations
+    # that may exceed GPU memory. Each sweep case runs in a separate process.
+    with torch.device(device):
+        model = get_model(args)
+    model.train(args.benchmark_method != "forward")
     optimizer = None
     if args.benchmark_method == "train_step":
-        optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
+        optimizer = AdamW(model.parameters(), lr=1e-4)
+
+    tokens = generate_random_batch(args.batch_size, args.context_length + 1, device)
+    batch, targets = tokens[:, :-1].contiguous(), tokens[:, 1:].contiguous()
 
     # 预热
     maybe_sync(device)
-    warmup_start_time = timeit.default_timer()
     with nvtx.range("warmup"):
         for _ in range(args.warmup_steps):
-            batch = generate_random_batch(args.batch_size, args.context_length, device)
-            run_step(model, batch, args.benchmark_method, optimizer)
+            run_step(model, batch, args.benchmark_method, optimizer, targets)
+            maybe_sync(device)
     maybe_sync(device)
 
     # 开始基准测试
-    maybe_sync(device)
-    batches = [generate_random_batch(args.batch_size, args.context_length, device) for _ in range(args.benchmark_steps)]
+    if args.profile:
+        if device.type != "cuda":
+            raise ValueError("--profile requires CUDA")
+        torch.cuda.cudart().cudaProfilerStart()
+    step_seconds = []
+    torch.cuda.reset_peak_memory_stats(device) if device.type == "cuda" else None
     benchmark_start_time = timeit.default_timer()
     with nvtx.range("measure"):
-        for batch in batches:
-            run_step(model, batch, args.benchmark_method, optimizer)
+        for i in range(args.benchmark_steps):
+            step_start = timeit.default_timer()
+            with nvtx.range(f"step_{i}"):
+                run_step(model, batch, args.benchmark_method, optimizer, targets)
+                maybe_sync(device)
+            step_seconds.append(timeit.default_timer() - step_start)
     maybe_sync(device)
     benchmark_end_time = timeit.default_timer()
+    if args.profile:
+        torch.cuda.cudart().cudaProfilerStop()
+
+    if args.json_output:
+        args.json_output.parent.mkdir(parents=True, exist_ok=True)
+        result = {
+            "config": {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
+            "device_name": torch.cuda.get_device_name(device) if device.type == "cuda" else str(device),
+            "torch_version": torch.__version__,
+            "cuda_version": torch.version.cuda,
+            "parameter_count": sum(p.numel() for p in model.parameters()),
+            "dtype": str(next(model.parameters()).dtype),
+            "optimizer": "cs336_basics.optimizer.AdamW" if optimizer is not None else None,
+            "loss": "next-token cross entropy" if args.benchmark_method != "forward" else None,
+            "step_seconds": step_seconds,
+            "mean_seconds": statistics.mean(step_seconds),
+            "std_seconds": statistics.pstdev(step_seconds),
+            "total_seconds": benchmark_end_time - benchmark_start_time,
+            "peak_allocated_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None,
+        }
+        args.json_output.write_text(json.dumps(result, indent=2) + "\n")
 
     if args.verbose:
         print(

@@ -1,0 +1,19 @@
+{
+  "configurations": 60,
+  "statuses": {
+    "ok": 28,
+    "oom": 32
+  },
+  "steps_per_valid_profile": 10,
+  "warmup_excluded_in_all_valid_profiles": true,
+  "all_kernels_correlated": true,
+  "constant_kernel_counts_across_steps": true,
+  "stage_times_sum_to_step_gpu_time": true,
+  "max_nvtx_vs_python_step_wall_difference_ms": 0.06395997534616527,
+  "official_nsys_stats_crosschecks": [
+    "small_ctx128_forward",
+    "small_ctx512_train_step"
+  ],
+  "attention_output_and_gradient_equivalence": "passed",
+  "cross_entropy_and_training_step_check": "passed"
+}

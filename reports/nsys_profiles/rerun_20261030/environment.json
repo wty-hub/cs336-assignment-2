@@ -1,0 +1,53 @@
+{
+  "started_utc": "2026-10-30T09:47:40.220112+00:00",
+  "gpu": "NVIDIA GeForce RTX 2080 Ti",
+  "gpu_bytes": 11347623936,
+  "torch": "2.8.0+cu128",
+  "cuda": "12.8",
+  "python": "3.12.3 | packaged by Anaconda, Inc. | (main, May  6 2024, 19:46:43) [GCC 11.2.0]",
+  "platform": "Linux-5.4.0-182-generic-x86_64-with-glibc2.35",
+  "nsys": "NVIDIA Nsight Systems version 2025.1.1.0",
+  "nvidia_smi": "Fri Oct 30 17:47:40 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 580.105.08             Driver Version: 580.105.08     CUDA Version: 13.0     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 2080 Ti     On  |   00000000:3E:00.0 Off |                  N/A |\n| 29%   32C    P8             15W /  250W |       3MiB /  11264MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+\n",
+  "batch_size": 4,
+  "dtype": "float32",
+  "vocab_size": 10000,
+  "warmup_steps": 5,
+  "benchmark_steps": 10,
+  "inference_grad_enabled": false,
+  "loss": "next-token cross entropy",
+  "optimizer": "cs336_basics.optimizer.AdamW (provided assignment-1 implementation)",
+  "tf32_matmul": false,
+  "git_head": "9257ad8364e3026ce867aa3c7c1113b764fb3b8d",
+  "args": {
+    "nsys": "/opt/nvidia/nsight-compute/2025.1.1/host/target-linux-x64/nsys",
+    "output": "reports/nsys_profiles/rerun_20261030",
+    "sizes": [
+      "small",
+      "medium",
+      "large",
+      "xl",
+      "2.7B"
+    ],
+    "contexts": [
+      128,
+      256,
+      512,
+      1024
+    ],
+    "methods": [
+      "forward",
+      "backward",
+      "train_step"
+    ],
+    "warmup_steps": 5,
+    "benchmark_steps": 10
+  },
+  "finished_utc": "2026-10-30T10:03:00.653175+00:00",
+  "dependencies": {
+    "torch": "2.8.0+cu128",
+    "einops": "0.8.2",
+    "einx": "0.4.3",
+    "jaxtyping": "0.3.11",
+    "numpy": "2.3.2"
+  }
+}

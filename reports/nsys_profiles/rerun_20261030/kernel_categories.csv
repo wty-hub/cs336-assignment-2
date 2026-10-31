@@ -1,0 +1,574 @@
+size,context_length,method,status,range,category,gpu_ms_per_step,percent
+small,128,forward,ok,all,matrix_multiply,13.067615,76.54122326107807
+small,128,forward,ok,all,elementwise,3.0009775000000003,17.577690254034266
+small,128,forward,ok,all,copy,0.3716036,2.1766017832802964
+small,128,forward,ok,all,reduction,0.4123457,2.4152413645830184
+small,128,forward,ok,all,index_gather_scatter,0.22010800000000003,1.2892433370243441
+small,128,forward,ok,forward,matrix_multiply,13.067615,76.54122326107807
+small,128,forward,ok,forward,elementwise,3.0009775000000003,17.577690254034266
+small,128,forward,ok,forward,copy,0.3716036,2.1766017832802964
+small,128,forward,ok,forward,reduction,0.4123457,2.4152413645830184
+small,128,forward,ok,forward,index_gather_scatter,0.22010800000000003,1.2892433370243441
+small,128,forward,ok,computing attention scores,matrix_multiply,0.20653290000000002,44.53529059014632
+small,128,forward,ok,computing attention scores,elementwise,0.2572182,55.4647094098537
+small,128,forward,ok,computing softmax,reduction,0.27603099999999997,49.25143549134476
+small,128,forward,ok,computing softmax,elementwise,0.2844217,50.748564508655235
+small,128,forward,ok,final matmul,matrix_multiply,0.3231134,77.0878280480697
+small,128,forward,ok,final matmul,copy,0.09603629999999999,22.9121719519303
+small,128,backward,ok,all,matrix_multiply,33.561656199999994,67.77909999964717
+small,128,backward,ok,all,copy,4.244523500000001,8.571984083352612
+small,128,backward,ok,all,elementwise,10.166949099999998,20.532558215652745
+small,128,backward,ok,all,reduction,1.2398902,2.504007589899051
+small,128,backward,ok,all,index_gather_scatter,0.295011,0.5957864519807553
+small,128,backward,ok,all,other,0.008201700000000001,0.01656365946764887
+small,128,backward,ok,forward,matrix_multiply,11.619981099999999,75.60347989720694
+small,128,backward,ok,forward,elementwise,2.8342408999999997,18.44051836770988
+small,128,backward,ok,forward,copy,0.34822739999999996,2.265683825901975
+small,128,backward,ok,forward,reduction,0.36973770000000006,2.405637025450027
+small,128,backward,ok,forward,index_gather_scatter,0.1974508,1.2846808837311645
+small,128,backward,ok,loss,elementwise,0.30452110000000004,74.23275585307273
+small,128,backward,ok,loss,reduction,0.1008012,24.57219177684815
+small,128,backward,ok,loss,index_gather_scatter,0.0049023999999999995,1.1950523700791298
+small,128,backward,ok,backward,matrix_multiply,21.9416751,65.03863837558025
+small,128,backward,ok,backward,copy,3.8962961,11.54924552921138
+small,128,backward,ok,backward,elementwise,7.028187100000002,20.8326719427551
+small,128,backward,ok,backward,reduction,0.7693513000000001,2.2804804444708306
+small,128,backward,ok,backward,index_gather_scatter,0.09265780000000001,0.27465255589701265
+small,128,backward,ok,backward,other,0.008201700000000001,0.024311152085421072
+small,128,backward,ok,computing attention scores,matrix_multiply,0.1819221,42.36568344732331
+small,128,backward,ok,computing attention scores,elementwise,0.24748699999999998,57.63431655267669
+small,128,backward,ok,computing softmax,reduction,0.2481591,49.26967801267127
+small,128,backward,ok,computing softmax,elementwise,0.25551599999999997,50.73032198732874
+small,128,backward,ok,final matmul,matrix_multiply,0.28530160000000004,75.1787626588416
+small,128,backward,ok,final matmul,copy,0.094196,24.821237341158415
+small,128,train_step,ok,all,elementwise,42.59294140000001,51.84562170918676
+small,128,train_step,ok,all,matrix_multiply,33.755870099999996,41.08882866842926
+small,128,train_step,ok,all,copy,4.2557601,5.180260413516564
+small,128,train_step,ok,all,reduction,1.2439371000000001,1.514163854309973
+small,128,train_step,ok,all,index_gather_scatter,0.29651439999999996,0.36092772436999343
+small,128,train_step,ok,all,other,0.0083777,0.010197630187452934
+small,128,train_step,ok,forward,matrix_multiply,11.5882836,75.52727967759375
+small,128,train_step,ok,forward,elementwise,2.8385289,18.500269194588277
+small,128,train_step,ok,forward,copy,0.3495619,2.2782890285780595
+small,128,train_step,ok,forward,reduction,0.3689508,2.404657257341541
+small,128,train_step,ok,forward,index_gather_scatter,0.197851,1.289504841898381
+small,128,train_step,ok,loss,elementwise,0.3051808,74.22334801922827
+small,128,train_step,ok,loss,reduction,0.10105670000000001,24.578107842219257
+small,128,train_step,ok,loss,index_gather_scatter,0.004928,1.1985441385524809
+small,128,train_step,ok,backward,matrix_multiply,22.167586500000002,65.21290798038461
+small,128,train_step,ok,backward,copy,3.9061982,11.491307083418576
+small,128,train_step,ok,backward,elementwise,7.042808700000001,20.718630585993303
+small,128,train_step,ok,backward,reduction,0.7739296,2.2767566414185807
+small,128,train_step,ok,backward,index_gather_scatter,0.09373540000000001,0.2757520767858307
+small,128,train_step,ok,backward,other,0.0083777,0.024645631999102302
+small,128,train_step,ok,optimizer_step,elementwise,32.406423,99.99999999999997
+small,128,train_step,ok,computing attention scores,matrix_multiply,0.1814798,42.29427835715865
+small,128,train_step,ok,computing attention scores,elementwise,0.24760849999999998,57.70572164284135
+small,128,train_step,ok,computing softmax,reduction,0.2477979,48.94293813386382
+small,128,train_step,ok,computing softmax,elementwise,0.25850169999999995,51.057061866136166
+small,128,train_step,ok,final matmul,matrix_multiply,0.284857,75.19589124013814
+small,128,train_step,ok,final matmul,copy,0.0939629,24.80410875986188
+small,256,forward,ok,all,matrix_multiply,21.4727866,69.48549195138017
+small,256,forward,ok,all,elementwise,7.4989951,24.266592565330548
+small,256,forward,ok,all,copy,0.7284199,2.3571516842008364
+small,256,forward,ok,all,reduction,0.9825950999999999,3.1796573581425895
+small,256,forward,ok,all,index_gather_scatter,0.21975,0.7111064409458525
+small,256,forward,ok,forward,matrix_multiply,21.4727866,69.48549195138017
+small,256,forward,ok,forward,elementwise,7.4989951,24.266592565330548
+small,256,forward,ok,forward,copy,0.7284199,2.3571516842008364
+small,256,forward,ok,forward,reduction,0.9825950999999999,3.1796573581425895
+small,256,forward,ok,forward,index_gather_scatter,0.21975,0.7111064409458525
+small,256,forward,ok,computing attention scores,matrix_multiply,0.624744,36.57028701058345
+small,256,forward,ok,computing attention scores,elementwise,1.0835937,63.42971298941655
+small,256,forward,ok,computing softmax,elementwise,1.657953,66.51394236744514
+small,256,forward,ok,computing softmax,reduction,0.8346868,33.48605763255485
+small,256,forward,ok,final matmul,matrix_multiply,0.6489181,79.1841151992409
+small,256,forward,ok,final matmul,copy,0.1705873,20.81588480075909
+small,256,backward,ok,all,matrix_multiply,68.3726793,65.94328222680717
+small,256,backward,ok,all,elementwise,26.7361459,25.786165362994534
+small,256,backward,ok,all,copy,5.4846478,5.2897689763349245
+small,256,backward,ok,all,reduction,2.6948382000000004,2.5990860354975305
+small,256,backward,ok,all,index_gather_scatter,0.38604420000000006,0.3723273958729009
+small,256,backward,ok,all,other,0.0097152,0.00937000249293839
+small,256,backward,ok,forward,matrix_multiply,22.755690600000005,70.5027838877992
+small,256,backward,ok,forward,elementwise,7.554907,23.406979154191053
+small,256,backward,ok,forward,copy,0.7371493,2.283871700687583
+small,256,backward,ok,forward,reduction,0.9975378,3.0906199758802595
+small,256,backward,ok,forward,index_gather_scatter,0.23101610000000003,0.715745281441918
+small,256,backward,ok,loss,elementwise,0.6093938,77.04105240109087
+small,256,backward,ok,loss,reduction,0.17298080000000002,21.868655173686737
+small,256,backward,ok,loss,index_gather_scatter,0.0086242,1.0902924252223898
+small,256,backward,ok,backward,matrix_multiply,45.61698869999999,64.59795322558716
+small,256,backward,ok,backward,elementwise,18.5718451,26.299482172584753
+small,256,backward,ok,backward,copy,4.7474985,6.722905101395813
+small,256,backward,ok,backward,reduction,1.5243196,2.1585801480501003
+small,256,backward,ok,backward,index_gather_scatter,0.1464039,0.20732171398774377
+small,256,backward,ok,backward,other,0.0097152,0.013757638394426163
+small,256,backward,ok,computing attention scores,matrix_multiply,0.6515858999999999,37.46258619211651
+small,256,backward,ok,computing attention scores,elementwise,1.0877118000000001,62.5374138078835
+small,256,backward,ok,computing softmax,elementwise,1.6635199999999999,66.33724284358958
+small,256,backward,ok,computing softmax,reduction,0.8441513,33.662757156410414
+small,256,backward,ok,final matmul,matrix_multiply,0.6717757,79.76709966640995
+small,256,backward,ok,final matmul,copy,0.17039569999999998,20.23290033359005
+small,256,train_step,ok,all,matrix_multiply,65.7474826,49.306452211159204
+small,256,train_step,ok,all,elementwise,59.11212869999999,44.330356594465904
+small,256,train_step,ok,all,copy,5.438452399999999,4.0784952177509535
+small,256,train_step,ok,all,reduction,2.6650057,1.9985856643204296
+small,256,train_step,ok,all,index_gather_scatter,0.37219739999999996,0.27912450166141733
+small,256,train_step,ok,all,other,0.0093152,0.00698581064208518
+small,256,train_step,ok,forward,matrix_multiply,21.3287306,69.37841718595719
+small,256,train_step,ok,forward,elementwise,7.494690800000002,24.378843483641514
+small,256,train_step,ok,forward,copy,0.7197397,2.3411801718708785
+small,256,train_step,ok,forward,reduction,0.9795868,3.1864147452008607
+small,256,train_step,ok,forward,index_gather_scatter,0.21985399999999997,0.7151444133295691
+small,256,train_step,ok,loss,elementwise,0.6128395,77.3156519662432
+small,256,train_step,ok,loss,reduction,0.1716722,21.658114510372283
+small,256,train_step,ok,loss,index_gather_scatter,0.0081344,1.026233523384522
+small,256,train_step,ok,backward,matrix_multiply,44.41875199999999,64.04153269770954
+small,256,train_step,ok,backward,elementwise,18.554553799999997,26.751360863855677
+small,256,train_step,ok,backward,copy,4.7187127,6.8032887026665545
+small,256,train_step,ok,backward,reduction,1.5137467,2.182471465747168
+small,256,train_step,ok,backward,index_gather_scatter,0.144209,0.20791591327923845
+small,256,train_step,ok,backward,other,0.0093152,0.013430356741803644
+small,256,train_step,ok,optimizer_step,elementwise,32.4500446,100.0
+small,256,train_step,ok,computing attention scores,matrix_multiply,0.6319984,36.874769058046226
+small,256,train_step,ok,computing attention scores,elementwise,1.0819063,63.12523094195377
+small,256,train_step,ok,computing softmax,elementwise,1.6590874000000002,66.55576228609206
+small,256,train_step,ok,computing softmax,reduction,0.8336906,33.44423771390794
+small,256,train_step,ok,final matmul,matrix_multiply,0.6438481,79.18589745245357
+small,256,train_step,ok,final matmul,copy,0.1692362,20.81410254754642
+small,512,forward,ok,all,matrix_multiply,48.1749476,64.81630008626342
+small,512,forward,ok,all,elementwise,21.052983699999995,28.32543836976404
+small,512,forward,ok,all,copy,2.0828487,2.8023392468305177
+small,512,forward,ok,all,reduction,2.755306,3.707087385093121
+small,512,forward,ok,all,index_gather_scatter,0.25927279999999997,0.34883491204888734
+small,512,forward,ok,forward,matrix_multiply,48.1749476,64.81630008626342
+small,512,forward,ok,forward,elementwise,21.052983699999995,28.32543836976404
+small,512,forward,ok,forward,copy,2.0828487,2.8023392468305177
+small,512,forward,ok,forward,reduction,2.755306,3.707087385093121
+small,512,forward,ok,forward,index_gather_scatter,0.25927279999999997,0.34883491204888734
+small,512,forward,ok,computing attention scores,matrix_multiply,2.4102893,36.68249795725078
+small,512,forward,ok,computing attention scores,elementwise,4.16039,63.317502042749204
+small,512,forward,ok,computing softmax,elementwise,6.7284242,73.3985880695019
+small,512,forward,ok,computing softmax,reduction,2.4385426,26.6014119304981
+small,512,forward,ok,final matmul,matrix_multiply,2.4749396999999997,88.79249277238405
+small,512,forward,ok,final matmul,copy,0.3123902,11.207507227615935
+small,512,backward,ok,all,matrix_multiply,143.09249520000003,61.48898888899854
+small,512,backward,ok,all,elementwise,74.20067120000003,31.885140031949316
+small,512,backward,ok,all,copy,8.2056768,3.526102252090109
+small,512,backward,ok,all,reduction,6.752831799999999,2.9017929901852457
+small,512,backward,ok,all,index_gather_scatter,0.44982459999999996,0.1932963695457189
+small,512,backward,ok,all,other,0.010889699999999999,0.004679467231098555
+small,512,backward,ok,forward,matrix_multiply,47.616172399999996,64.56232170648445
+small,512,backward,ok,forward,elementwise,21.042450399999996,28.531261202707302
+small,512,backward,ok,forward,copy,2.0881308,2.8312769733423337
+small,512,backward,ok,forward,reduction,2.7492692,3.7277083310486576
+small,512,backward,ok,forward,index_gather_scatter,0.2562388,0.34743178641724526
+small,512,backward,ok,loss,elementwise,1.2172697000000001,78.8489247311828
+small,512,backward,ok,loss,reduction,0.31709669999999995,20.54001165954139
+small,512,backward,ok,loss,index_gather_scatter,0.0094336,0.6110636092758129
+small,512,backward,ok,backward,matrix_multiply,95.4763228,60.65210908868127
+small,512,backward,ok,backward,elementwise,51.9409511,32.99591081745201
+small,512,backward,ok,backward,copy,6.117546,3.8862207557393043
+small,512,backward,ok,backward,reduction,3.6864659,2.341857387897888
+small,512,backward,ok,backward,index_gather_scatter,0.1841522,0.11698417990727907
+small,512,backward,ok,backward,other,0.010889699999999999,0.006917770322245929
+small,512,backward,ok,computing attention scores,matrix_multiply,2.3719476,36.34677483207289
+small,512,backward,ok,computing attention scores,elementwise,4.1539343,63.65322516792712
+small,512,backward,ok,computing softmax,elementwise,6.7267727,73.44812606775393
+small,512,backward,ok,computing softmax,reduction,2.4317628,26.55187393224604
+small,512,backward,ok,final matmul,matrix_multiply,2.4968955999999998,88.84368120842706
+small,512,backward,ok,final matmul,copy,0.31354129999999997,11.15631879157294
+small,512,train_step,ok,all,matrix_multiply,139.4408976,53.33755198114817
+small,512,train_step,ok,all,elementwise,106.61444900000002,40.78110377481514
+small,512,train_step,ok,all,copy,8.193383200000001,3.1340518445677747
+small,512,train_step,ok,all,reduction,6.732846800000001,2.5753819170488983
+small,512,train_step,ok,all,index_gather_scatter,0.4381376,0.1675920581200813
+small,512,train_step,ok,all,other,0.0112897,0.004318424299942032
+small,512,train_step,ok,forward,matrix_multiply,45.31283749999999,63.457738100507235
+small,512,train_step,ok,forward,elementwise,21.020002299999998,29.437172210313683
+small,512,train_step,ok,forward,copy,2.0904408,2.927528976772087
+small,512,train_step,ok,forward,reduction,2.7364043999999996,3.8321597881014546
+small,512,train_step,ok,forward,index_gather_scatter,0.24663810000000003,0.3454009243055396
+small,512,train_step,ok,loss,elementwise,1.2195611999999998,78.97686861259271
+small,512,train_step,ok,loss,reduction,0.3155321,20.43336341362407
+small,512,train_step,ok,loss,index_gather_scatter,0.0091072,0.5897679737831971
+small,512,train_step,ok,backward,matrix_multiply,94.12806009999998,60.32380912844791
+small,512,train_step,ok,backward,elementwise,51.932396600000004,33.28189252761683
+small,512,train_step,ok,backward,copy,6.102942400000001,3.9111900539370823
+small,512,train_step,ok,backward,reduction,3.6809103000000003,2.35898339050268
+small,512,train_step,ok,backward,index_gather_scatter,0.18239229999999998,0.11688967434375726
+small,512,train_step,ok,backward,other,0.0112897,0.007235225151712635
+small,512,train_step,ok,optimizer_step,elementwise,32.4424889,100.0
+small,512,train_step,ok,computing attention scores,elementwise,4.136027599999999,64.66701719416655
+small,512,train_step,ok,computing attention scores,matrix_multiply,2.2598567,35.33298280583343
+small,512,train_step,ok,computing softmax,elementwise,6.7385874999999995,73.54785956351459
+small,512,train_step,ok,computing softmax,reduction,2.4235927999999998,26.452140436485404
+small,512,train_step,ok,final matmul,matrix_multiply,2.3964466,88.46366402770951
+small,512,train_step,ok,final matmul,copy,0.3125149,11.536335972290487
+small,1024,forward,ok,all,matrix_multiply,105.151473,57.22562335275847
+small,1024,forward,ok,all,elementwise,64.573614,35.142306692084205
+small,1024,forward,ok,all,reduction,9.4969401,5.168432753826552
+small,1024,forward,ok,all,copy,4.2344437,2.304472523030286
+small,1024,forward,ok,all,index_gather_scatter,0.2924634,0.15916467830048506
+small,1024,forward,ok,forward,matrix_multiply,105.151473,57.22562335275847
+small,1024,forward,ok,forward,elementwise,64.573614,35.142306692084205
+small,1024,forward,ok,forward,reduction,9.4969401,5.168432753826552
+small,1024,forward,ok,forward,copy,4.2344437,2.304472523030286
+small,1024,forward,ok,forward,index_gather_scatter,0.2924634,0.15916467830048506
+small,1024,forward,ok,computing attention scores,matrix_multiply,9.2165254,34.341741811027156
+small,1024,forward,ok,computing attention scores,elementwise,17.6211506,65.65825818897285
+small,1024,forward,ok,computing softmax,elementwise,27.0123083,75.71285960563121
+small,1024,forward,ok,computing softmax,reduction,8.6649973,24.287140394368794
+small,1024,forward,ok,final matmul,matrix_multiply,11.5791066,95.1125550497143
+small,1024,forward,ok,final matmul,copy,0.5950029,4.887444950285686
+small,1024,backward,ok,all,matrix_multiply,299.16122490000004,53.196418096054664
+small,1024,backward,ok,all,elementwise,228.7724199,40.6799821798917
+small,1024,backward,ok,all,reduction,21.047726299999997,3.7426763732512227
+small,1024,backward,ok,all,copy,12.739939699999999,2.2653977266815404
+small,1024,backward,ok,all,index_gather_scatter,0.6264021999999999,0.11138593692624114
+small,1024,backward,ok,all,other,0.0232804,0.004139687194613405
+small,1024,backward,ok,forward,matrix_multiply,102.9980322,56.72511201496073
+small,1024,backward,ok,forward,elementwise,64.55899,35.55520295971955
+small,1024,backward,ok,forward,reduction,9.486219799999999,5.224438460228548
+small,1024,backward,ok,forward,copy,4.241240400000001,2.335819739790882
+small,1024,backward,ok,forward,index_gather_scatter,0.28947760000000006,0.15942682530027985
+small,1024,backward,ok,loss,elementwise,2.4453777,80.16638265814925
+small,1024,backward,ok,loss,reduction,0.5950291,19.50673326387746
+small,1024,backward,ok,loss,index_gather_scatter,0.0099712,0.3268840779732872
+small,1024,backward,ok,backward,matrix_multiply,196.16319269999997,51.929829131718094
+small,1024,backward,ok,backward,elementwise,161.76805220000003,42.82448299342375
+small,1024,backward,ok,backward,reduction,10.9664774,2.9031302443664204
+small,1024,backward,ok,backward,copy,8.498699299999998,2.249841045184274
+small,1024,backward,ok,backward,index_gather_scatter,0.3269534,0.086553618761703
+small,1024,backward,ok,backward,other,0.0232804,0.006162966545752241
+small,1024,backward,ok,computing attention scores,elementwise,17.577624399999998,66.11888829618347
+small,1024,backward,ok,computing attention scores,matrix_multiply,9.007251499999999,33.88111170381653
+small,1024,backward,ok,computing softmax,elementwise,27.0392355,75.74807760776929
+small,1024,backward,ok,computing softmax,reduction,8.6570308,24.25192239223069
+small,1024,backward,ok,final matmul,matrix_multiply,11.2457696,94.98640727306378
+small,1024,backward,ok,final matmul,copy,0.5935766,5.013592726936222
+medium,128,forward,ok,all,matrix_multiply,34.473409,78.3527840510817
+medium,128,forward,ok,all,elementwise,7.3518321,16.709589495808512
+medium,128,forward,ok,all,copy,0.8800142,2.0001376299769316
+medium,128,forward,ok,all,reduction,0.8925394,2.0286054931579884
+medium,128,forward,ok,all,index_gather_scatter,0.39988759999999995,0.9088833299748609
+medium,128,forward,ok,forward,matrix_multiply,34.473409,78.3527840510817
+medium,128,forward,ok,forward,elementwise,7.3518321,16.709589495808512
+medium,128,forward,ok,forward,copy,0.8800142,2.0001376299769316
+medium,128,forward,ok,forward,reduction,0.8925394,2.0286054931579884
+medium,128,forward,ok,forward,index_gather_scatter,0.39988759999999995,0.9088833299748609
+medium,128,forward,ok,computing attention scores,matrix_multiply,0.4586625,37.53586330623797
+medium,128,forward,ok,computing attention scores,elementwise,0.7632689,62.464136693762015
+medium,128,forward,ok,computing softmax,reduction,0.6302169,40.398734172752334
+medium,128,forward,ok,computing softmax,elementwise,0.9297747999999999,59.60126582724767
+medium,128,forward,ok,final matmul,matrix_multiply,0.5937772,71.60921910633377
+medium,128,forward,ok,final matmul,copy,0.23541379999999998,28.390780893666236
+medium,128,backward,ok,all,matrix_multiply,108.10572800000001,71.88367872546195
+medium,128,backward,ok,all,copy,12.8452544,8.541306344437425
+medium,128,backward,ok,all,elementwise,26.073550599999997,17.337311992963734
+medium,128,backward,ok,all,reduction,2.7379047,1.8205387029606077
+medium,128,backward,ok,all,index_gather_scatter,0.6175547000000001,0.41063599932650235
+medium,128,backward,ok,all,other,0.0098178,0.006528234849783725
+medium,128,backward,ok,forward,matrix_multiply,36.089995900000005,78.73004685284741
+medium,128,backward,ok,forward,elementwise,7.504243300000001,16.370448703879354
+medium,128,backward,ok,forward,copy,0.9036961,1.9714060508866798
+medium,128,backward,ok,forward,reduction,0.9265458,2.021252494664566
+medium,128,backward,ok,forward,index_gather_scatter,0.4156998,0.9068458977220136
+medium,128,backward,ok,loss,elementwise,0.3044606,74.11973553966881
+medium,128,backward,ok,loss,reduction,0.1013032,24.66186558563629
+medium,128,backward,ok,loss,index_gather_scatter,0.0050048,1.218398874694901
+medium,128,backward,ok,backward,matrix_multiply,72.01573210000001,69.15356247987069
+medium,128,backward,ok,backward,copy,11.9415583,11.46695692629178
+medium,128,backward,ok,backward,elementwise,18.2648467,17.53893462750356
+medium,128,backward,ok,backward,reduction,1.7100557,1.6420918075206097
+medium,128,backward,ok,backward,index_gather_scatter,0.1968501,0.18902655423423503
+medium,128,backward,ok,backward,other,0.0098178,0.009427604579123266
+medium,128,backward,ok,computing attention scores,matrix_multiply,0.47580730000000004,38.41315107899497
+medium,128,backward,ok,computing attention scores,elementwise,0.7628499999999999,61.58684892100502
+medium,128,backward,ok,computing softmax,reduction,0.6554068,40.786944629029975
+medium,128,backward,ok,computing softmax,elementwise,0.9514966,59.21305537097004
+medium,128,backward,ok,final matmul,matrix_multiply,0.6190486,72.23356657848406
+medium,128,backward,ok,final matmul,copy,0.237961,27.766433421515934
+medium,128,train_step,ok,all,elementwise,135.0037657,52.25237833545025
+medium,128,train_step,ok,all,matrix_multiply,107.17519159999996,41.48149965018027
+medium,128,train_step,ok,all,copy,12.860164799999998,4.977447800078956
+medium,128,train_step,ok,all,reduction,2.7141895,1.0505103757124794
+medium,128,train_step,ok,all,index_gather_scatter,0.6054462,0.23433423312399265
+medium,128,train_step,ok,all,other,0.0098945,0.003829605454035958
+medium,128,train_step,ok,forward,matrix_multiply,34.66708669999999,78.32611034134673
+medium,128,train_step,ok,forward,elementwise,7.4178834,16.759814827117975
+medium,128,train_step,ok,forward,copy,0.8775119,1.9826325326969236
+medium,128,train_step,ok,forward,reduction,0.8961796999999999,2.0248101801953555
+medium,128,train_step,ok,forward,index_gather_scatter,0.4012748,0.906632118643008
+medium,128,train_step,ok,loss,elementwise,0.30484429999999996,74.02403488919862
+medium,128,train_step,ok,loss,reduction,0.10198170000000001,24.76377914515636
+medium,128,train_step,ok,loss,index_gather_scatter,0.004992,1.212185965645018
+medium,128,train_step,ok,backward,matrix_multiply,72.50810489999998,69.2568397198225
+medium,128,train_step,ok,backward,copy,11.982652899999998,11.445350453692058
+medium,128,train_step,ok,backward,elementwise,18.2786443,17.45902944679978
+medium,128,train_step,ok,backward,reduction,1.7160281,1.63908135842634
+medium,128,train_step,ok,backward,index_gather_scatter,0.19917939999999998,0.19024819087900907
+medium,128,train_step,ok,backward,other,0.0098945,0.009450830380312199
+medium,128,train_step,ok,optimizer_step,elementwise,109.0023937,100.0
+medium,128,train_step,ok,computing attention scores,matrix_multiply,0.46207079999999995,37.84655312092438
+medium,128,train_step,ok,computing attention scores,elementwise,0.7588351000000001,62.153446879075624
+medium,128,train_step,ok,computing softmax,reduction,0.6344534,40.289969378644294
+medium,128,train_step,ok,computing softmax,elementwise,0.9402646,59.71003062135569
+medium,128,train_step,ok,final matmul,matrix_multiply,0.5961875,71.5808301029035
+medium,128,train_step,ok,final matmul,copy,0.23669959999999998,28.419169897096495
+medium,256,forward,ok,all,matrix_multiply,81.1402976,75.47251995725529
+medium,256,forward,ok,all,elementwise,20.8676848,19.410044134835818
+medium,256,forward,ok,all,copy,2.5658522,2.3866233807339077
+medium,256,forward,ok,all,reduction,2.4451649000000004,2.2743662788097803
+medium,256,forward,ok,all,index_gather_scatter,0.4907241,0.4564462483652037
+medium,256,forward,ok,forward,matrix_multiply,81.1402976,75.47251995725529
+medium,256,forward,ok,forward,elementwise,20.8676848,19.410044134835818
+medium,256,forward,ok,forward,copy,2.5658522,2.3866233807339077
+medium,256,forward,ok,forward,reduction,2.4451649000000004,2.2743662788097803
+medium,256,forward,ok,forward,index_gather_scatter,0.4907241,0.4564462483652037
+medium,256,forward,ok,computing attention scores,matrix_multiply,1.829799,38.81037420661714
+medium,256,forward,ok,computing attention scores,elementwise,2.8849172,61.18962579338285
+medium,256,forward,ok,computing softmax,elementwise,4.468946000000001,68.1003437851735
+medium,256,forward,ok,computing softmax,reduction,2.0933498000000004,31.899656214826532
+medium,256,forward,ok,final matmul,matrix_multiply,1.6565767,78.81895232789907
+medium,256,forward,ok,final matmul,copy,0.44517249999999997,21.181047672100934
+medium,256,backward,ok,all,matrix_multiply,233.37520940000002,71.46360514535793
+medium,256,backward,ok,all,elementwise,69.43988379999999,21.263717127371695
+medium,256,backward,ok,all,copy,16.8642485,5.164130324620481
+medium,256,backward,ok,all,reduction,6.089450499999999,1.8646971424386534
+medium,256,backward,ok,all,index_gather_scatter,0.7864099000000001,0.24081258125268737
+medium,256,backward,ok,all,other,0.00992,0.0030376789585515873
+medium,256,backward,ok,forward,matrix_multiply,79.48732190000001,75.09307547172031
+medium,256,backward,ok,forward,elementwise,20.829616599999998,19.67810631937768
+medium,256,backward,ok,forward,copy,2.6257369,2.480579977881742
+medium,256,backward,ok,forward,reduction,2.424542,2.290507605972767
+medium,256,backward,ok,forward,index_gather_scatter,0.48451579999999994,0.45773062504752643
+medium,256,backward,ok,loss,elementwise,0.6069203,76.69979977080557
+medium,256,backward,ok,loss,reduction,0.1753135,22.15531486938091
+medium,256,backward,ok,loss,index_gather_scatter,0.009059399999999999,1.1448853598135305
+medium,256,backward,ok,backward,matrix_multiply,153.88788749999998,69.97381823330814
+medium,256,backward,ok,backward,elementwise,48.0033469,21.827432458393037
+medium,256,backward,ok,backward,copy,14.238511599999999,6.474343359942799
+medium,256,backward,ok,backward,reduction,3.4895950000000004,1.5867414271825715
+medium,256,backward,ok,backward,index_gather_scatter,0.2928347,0.13315383298250372
+medium,256,backward,ok,backward,other,0.00992,0.004510688190936514
+medium,256,backward,ok,computing attention scores,matrix_multiply,1.8136952000000002,38.69209988301246
+medium,256,backward,ok,computing attention scores,elementwise,2.8738125999999995,61.307900116987526
+medium,256,backward,ok,computing softmax,elementwise,4.4686591,68.25814367341177
+medium,256,backward,ok,computing softmax,reduction,2.0780456000000003,31.741856326588252
+medium,256,backward,ok,final matmul,matrix_multiply,1.6322105,78.70155042310611
+medium,256,backward,ok,final matmul,copy,0.44171370000000004,21.298449576893894
+medium,256,train_step,ok,all,matrix_multiply,226.3226889,52.85317270171463
+medium,256,train_step,ok,all,elementwise,178.24634559999998,41.62589678142653
+medium,256,train_step,ok,all,copy,16.843794400000004,3.9335339231884396
+medium,256,train_step,ok,all,reduction,6.032891099999999,1.408861995890404
+medium,256,train_step,ok,all,index_gather_scatter,0.7543977999999999,0.17617463544192435
+medium,256,train_step,ok,all,other,0.010105600000000001,0.002359962338068737
+medium,256,train_step,ok,forward,matrix_multiply,73.93008789999999,73.82586283545064
+medium,256,train_step,ok,forward,elementwise,20.719378199999998,20.690168461561186
+medium,256,train_step,ok,forward,copy,2.6571417,2.65339571818034
+medium,256,train_step,ok,forward,reduction,2.3795891000000005,2.3762344059289764
+medium,256,train_step,ok,forward,index_gather_scatter,0.45498,0.4543385788788348
+medium,256,train_step,ok,loss,elementwise,0.6094451,77.08120613674792
+medium,256,train_step,ok,loss,reduction,0.1726289,21.833703849715167
+medium,256,train_step,ok,loss,index_gather_scatter,0.0085793,1.0850900135369066
+medium,256,train_step,ok,backward,matrix_multiply,152.39260099999998,69.7938385514851
+medium,256,train_step,ok,backward,elementwise,47.9859118,21.976926431717008
+medium,256,train_step,ok,backward,copy,14.1866527,6.497303291842825
+medium,256,train_step,ok,backward,reduction,3.4806731,1.5941032228454264
+medium,256,train_step,ok,backward,index_gather_scatter,0.2908385,0.1332002681255903
+medium,256,train_step,ok,backward,other,0.010105600000000001,0.004628233984049448
+medium,256,train_step,ok,optimizer_step,elementwise,108.93161049999999,99.99999999999999
+medium,256,train_step,ok,computing attention scores,matrix_multiply,1.7400113999999998,37.857012953736444
+medium,256,train_step,ok,computing attention scores,elementwise,2.8562609,62.14298704626356
+medium,256,train_step,ok,computing softmax,elementwise,4.4610052,68.52115424202897
+medium,256,train_step,ok,computing softmax,reduction,2.0494006000000002,31.47884575797104
+medium,256,train_step,ok,final matmul,matrix_multiply,1.5742278,78.21142736116512
+medium,256,train_step,ok,final matmul,copy,0.4385571,21.78857263883488
+medium,512,forward,ok,all,matrix_multiply,159.9543274,69.79828715500531
+medium,512,forward,ok,all,elementwise,55.8402472,24.36666561152431
+medium,512,forward,ok,all,copy,5.6075402,2.446927866690751
+medium,512,forward,ok,all,reduction,7.244332,3.161164648692049
+medium,512,forward,ok,all,index_gather_scatter,0.5201043,0.2269547180875647
+medium,512,forward,ok,forward,matrix_multiply,159.9543274,69.79828715500531
+medium,512,forward,ok,forward,elementwise,55.8402472,24.36666561152431
+medium,512,forward,ok,forward,copy,5.6075402,2.446927866690751
+medium,512,forward,ok,forward,reduction,7.244332,3.161164648692049
+medium,512,forward,ok,forward,index_gather_scatter,0.5201043,0.2269547180875647
+medium,512,forward,ok,computing attention scores,matrix_multiply,6.5481211,37.04706738337498
+medium,512,forward,ok,computing attention scores,elementwise,11.1270191,62.95293261662501
+medium,512,forward,ok,computing softmax,elementwise,17.935307299999998,74.07316624993119
+medium,512,forward,ok,computing softmax,reduction,6.2776543,25.926833750068806
+medium,512,forward,ok,final matmul,matrix_multiply,6.5249059,88.8620425561216
+medium,512,forward,ok,final matmul,copy,0.8178309,11.13795744387842
+medium,1024,forward,ok,all,matrix_multiply,346.25069550000006,62.43117526686669
+medium,1024,forward,ok,all,elementwise,171.3840905,30.901628014081613
+medium,1024,forward,ok,all,reduction,24.9054438,4.490607953094778
+medium,1024,forward,ok,all,copy,11.5087108,2.075092845699371
+medium,1024,forward,ok,all,index_gather_scatter,0.5629084000000001,0.10149592025755656
+medium,1024,forward,ok,forward,matrix_multiply,346.25069550000006,62.43117526686669
+medium,1024,forward,ok,forward,elementwise,171.3840905,30.901628014081613
+medium,1024,forward,ok,forward,reduction,24.9054438,4.490607953094778
+medium,1024,forward,ok,forward,copy,11.5087108,2.075092845699371
+medium,1024,forward,ok,forward,index_gather_scatter,0.5629084000000001,0.10149592025755656
+medium,1024,forward,ok,computing attention scores,matrix_multiply,25.072605,34.76436865758311
+medium,1024,forward,ok,computing attention scores,elementwise,47.048955,65.2356313424169
+medium,1024,forward,ok,computing softmax,elementwise,72.0561067,75.8979476460006
+medium,1024,forward,ok,computing softmax,reduction,22.8820424,24.102052353999387
+medium,1024,forward,ok,final matmul,matrix_multiply,32.0740402,95.37899007122135
+medium,1024,forward,ok,final matmul,copy,1.5539529,4.621009928778653
+large,128,forward,ok,all,matrix_multiply,96.9130951,83.60196614088584
+large,128,forward,ok,all,elementwise,14.732096699999998,12.708625683936658
+large,128,forward,ok,all,copy,1.7151884,1.4796052318221766
+large,128,forward,ok,all,reduction,1.8843809000000002,1.6255589405722324
+large,128,forward,ok,all,index_gather_scatter,0.6772675000000001,0.5842440027830914
+large,128,forward,ok,forward,matrix_multiply,96.9130951,83.60196614088584
+large,128,forward,ok,forward,elementwise,14.732096699999998,12.708625683936658
+large,128,forward,ok,forward,copy,1.7151884,1.4796052318221766
+large,128,forward,ok,forward,reduction,1.8843809000000002,1.6255589405722324
+large,128,forward,ok,forward,index_gather_scatter,0.6772675000000001,0.5842440027830914
+large,128,forward,ok,computing attention scores,matrix_multiply,1.0122617999999999,40.77301759549182
+large,128,forward,ok,computing attention scores,elementwise,1.4704139,59.22698240450816
+large,128,forward,ok,computing softmax,reduction,1.3919206000000002,40.59303508018646
+large,128,forward,ok,computing softmax,elementwise,2.0370435000000002,59.40696491981355
+large,128,forward,ok,final matmul,matrix_multiply,1.0948499999999999,71.62593656382869
+large,128,forward,ok,final matmul,copy,0.43371639999999995,28.374063436171298
+large,128,backward,ok,all,matrix_multiply,266.5630531,74.30240410881167
+large,128,backward,ok,all,copy,36.625052399999994,10.208952112017966
+large,128,backward,ok,all,elementwise,49.54493849999998,13.810271150339027
+large,128,backward,ok,all,reduction,5.0179199,1.398706639421545
+large,128,backward,ok,all,index_gather_scatter,0.9934128999999999,0.276906217438228
+large,128,backward,ok,all,other,0.0099008,0.002759771971566312
+large,128,backward,ok,forward,matrix_multiply,92.33954,83.19303703137201
+large,128,backward,ok,forward,elementwise,14.509362699999999,13.07216765865097
+large,128,backward,ok,forward,copy,1.6914118999999999,1.523872577576229
+large,128,backward,ok,forward,reduction,1.8051209,1.626318366756035
+large,128,backward,ok,forward,index_gather_scatter,0.6488776,0.5846043656447477
+large,128,backward,ok,loss,elementwise,0.3038751,73.54689416196987
+large,128,backward,ok,loss,reduction,0.10388560000000001,25.143433035983325
+large,128,backward,ok,loss,index_gather_scatter,0.0054112,1.3096728020467991
+large,128,backward,ok,backward,matrix_multiply,174.2235131,70.43694048693317
+large,128,backward,ok,backward,copy,34.9336405,14.123344852299494
+large,128,backward,ok,backward,elementwise,34.731700700000005,14.041702475668167
+large,128,backward,ok,backward,reduction,3.1089134,1.2569046751407118
+large,128,backward,ok,backward,index_gather_scatter,0.3391241,0.13710470891305182
+large,128,backward,ok,backward,other,0.0099008,0.00400280104541772
+large,128,backward,ok,computing attention scores,matrix_multiply,0.9999613,40.64579811662032
+large,128,backward,ok,computing attention scores,elementwise,1.4602224,59.35420188337969
+large,128,backward,ok,computing softmax,reduction,1.3464287,40.11912539906341
+large,128,backward,ok,computing softmax,elementwise,2.0096482,59.880874600936586
+large,128,backward,ok,final matmul,matrix_multiply,1.0461849,70.8512656601199
+large,128,backward,ok,final matmul,copy,0.4304082,29.148734339880093
+large,256,forward,ok,all,matrix_multiply,188.95643189999998,79.2593596045796
+large,256,forward,ok,all,elementwise,39.1573614,16.424883541469352
+large,256,forward,ok,all,copy,5.1790126999999995,2.172380298772908
+large,256,forward,ok,all,reduction,4.3622091,1.8297651805271498
+large,256,forward,ok,all,index_gather_scatter,0.7476579,0.31361137465098804
+large,256,forward,ok,forward,matrix_multiply,188.95643189999998,79.2593596045796
+large,256,forward,ok,forward,elementwise,39.1573614,16.424883541469352
+large,256,forward,ok,forward,copy,5.1790126999999995,2.172380298772908
+large,256,forward,ok,forward,reduction,4.3622091,1.8297651805271498
+large,256,forward,ok,forward,index_gather_scatter,0.7476579,0.31361137465098804
+large,256,forward,ok,computing attention scores,matrix_multiply,3.3897893000000003,38.66474181086043
+large,256,forward,ok,computing attention scores,elementwise,5.3773436,61.33525818913957
+large,256,forward,ok,computing softmax,elementwise,8.392823400000001,69.39928942000414
+large,256,forward,ok,computing softmax,reduction,3.7007059,30.600710579995866
+large,256,forward,ok,final matmul,matrix_multiply,3.3214166,80.34141082914756
+large,256,forward,ok,final matmul,copy,0.8127112000000001,19.658589170852437
+large,512,forward,ok,all,matrix_multiply,382.56153420000004,74.74766772737279
+large,512,forward,ok,all,elementwise,104.36627439999998,20.391845241598812
+large,512,forward,ok,all,copy,10.687827,2.08826572957539
+large,512,forward,ok,all,reduction,13.408607799999999,2.6198717615898217
+large,512,forward,ok,all,index_gather_scatter,0.779731,0.15234953986320587
+large,512,forward,ok,forward,matrix_multiply,382.56153420000004,74.74766772737279
+large,512,forward,ok,forward,elementwise,104.36627439999998,20.391845241598812
+large,512,forward,ok,forward,copy,10.687827,2.08826572957539
+large,512,forward,ok,forward,reduction,13.408607799999999,2.6198717615898217
+large,512,forward,ok,forward,index_gather_scatter,0.779731,0.15234953986320587
+large,512,forward,ok,computing attention scores,matrix_multiply,12.602182899999999,37.57422639399869
+large,512,forward,ok,computing attention scores,elementwise,20.9372512,62.4257736060013
+large,512,forward,ok,computing softmax,elementwise,33.6488206,74.43548148632998
+large,512,forward,ok,computing softmax,reduction,11.556530299999999,25.564518513670027
+large,512,forward,ok,final matmul,matrix_multiply,13.0313861,89.53120962334908
+large,512,forward,ok,final matmul,copy,1.5237463,10.46879037665092
+large,1024,forward,ok,all,matrix_multiply,779.3067777,66.68070400073431
+large,1024,forward,ok,all,elementwise,320.7218218,27.44228265169117
+large,1024,forward,ok,all,copy,21.6934877,1.856184333897999
+large,1024,forward,ok,all,reduction,46.1572113,3.949401483813951
+large,1024,forward,ok,all,index_gather_scatter,0.8347836,0.07142752986256672
+large,1024,forward,ok,forward,matrix_multiply,779.3067777,66.68070400073431
+large,1024,forward,ok,forward,elementwise,320.7218218,27.44228265169117
+large,1024,forward,ok,forward,copy,21.6934877,1.856184333897999
+large,1024,forward,ok,forward,reduction,46.1572113,3.949401483813951
+large,1024,forward,ok,forward,index_gather_scatter,0.8347836,0.07142752986256672
+large,1024,forward,ok,computing attention scores,matrix_multiply,47.9802897,35.158041627627625
+large,1024,forward,ok,computing attention scores,elementwise,88.49002399999999,64.84195837237237
+large,1024,forward,ok,computing softmax,elementwise,135.0345817,76.00223518349719
+large,1024,forward,ok,computing softmax,reduction,42.6372741,23.997764816502805
+large,1024,forward,ok,final matmul,matrix_multiply,56.7487155,95.06830219923104
+large,1024,forward,ok,final matmul,copy,2.9438573000000003,4.9316978007689425
+xl,128,forward,ok,all,matrix_multiply,196.99108999999999,85.46512990734377
+xl,128,forward,ok,all,elementwise,26.1675076,11.35284563573614
+xl,128,forward,ok,all,copy,3.2462495,1.4083943351404864
+xl,128,forward,ok,all,reduction,3.1171064,1.3523652435803704
+xl,128,forward,ok,all,index_gather_scatter,0.9709858,0.42126487819924296
+xl,128,forward,ok,forward,matrix_multiply,196.99108999999999,85.46512990734377
+xl,128,forward,ok,forward,elementwise,26.1675076,11.35284563573614
+xl,128,forward,ok,forward,copy,3.2462495,1.4083943351404864
+xl,128,forward,ok,forward,reduction,3.1171064,1.3523652435803704
+xl,128,forward,ok,forward,index_gather_scatter,0.9709858,0.42126487819924296
+xl,128,forward,ok,computing attention scores,matrix_multiply,1.7001874999999997,41.19073298118171
+xl,128,forward,ok,computing attention scores,elementwise,2.4274096000000003,58.80926701881829
+xl,128,forward,ok,computing softmax,reduction,2.3693718,40.10791449413583
+xl,128,forward,ok,computing softmax,elementwise,3.5381201000000004,59.89208550586418
+xl,128,forward,ok,final matmul,matrix_multiply,1.6371486000000002,69.30544761222919
+xl,128,forward,ok,final matmul,copy,0.7250734999999999,30.69455238777082
+xl,256,forward,ok,all,matrix_multiply,396.9378507,82.91107036913886
+xl,256,forward,ok,all,elementwise,64.92355160000001,13.561017539217554
+xl,256,forward,ok,all,copy,8.769829099999999,1.8318130063765714
+xl,256,forward,ok,all,reduction,7.1004229,1.483112939908265
+xl,256,forward,ok,all,index_gather_scatter,1.019674,0.21298614535875324
+xl,256,forward,ok,forward,matrix_multiply,396.9378507,82.91107036913886
+xl,256,forward,ok,forward,elementwise,64.92355160000001,13.561017539217554
+xl,256,forward,ok,forward,copy,8.769829099999999,1.8318130063765714
+xl,256,forward,ok,forward,reduction,7.1004229,1.483112939908265
+xl,256,forward,ok,forward,index_gather_scatter,1.019674,0.21298614535875324
+xl,256,forward,ok,computing attention scores,matrix_multiply,5.6901024,38.97922708323864
+xl,256,forward,ok,computing attention scores,elementwise,8.907679100000001,61.020772916761366
+xl,256,forward,ok,computing softmax,elementwise,13.9934419,70.43787786522114
+xl,256,forward,ok,computing softmax,reduction,5.8729174,29.562122134778868
+xl,256,forward,ok,final matmul,matrix_multiply,5.6675519,81.25754152329878
+xl,256,forward,ok,final matmul,copy,1.3072492,18.742458476701216
+xl,512,forward,ok,all,matrix_multiply,811.5966346,79.14897799585245
+xl,512,forward,ok,all,elementwise,172.9813889,16.869587132388652
+xl,512,forward,ok,all,copy,17.8281148,1.7386433184363665
+xl,512,forward,ok,all,reduction,21.948200300000003,2.140444586058985
+xl,512,forward,ok,all,index_gather_scatter,1.0494697000000002,0.10234696726355041
+xl,512,forward,ok,forward,matrix_multiply,811.5966346,79.14897799585245
+xl,512,forward,ok,forward,elementwise,172.9813889,16.869587132388652
+xl,512,forward,ok,forward,copy,17.8281148,1.7386433184363665
+xl,512,forward,ok,forward,reduction,21.948200300000003,2.140444586058985
+xl,512,forward,ok,forward,index_gather_scatter,1.0494697000000002,0.10234696726355041
+xl,512,forward,ok,computing attention scores,matrix_multiply,21.2564919,37.803098213036115
+xl,512,forward,ok,computing attention scores,elementwise,34.9730049,62.19690178696388
+xl,512,forward,ok,computing softmax,elementwise,56.15564750000001,74.80888521828018
+xl,512,forward,ok,computing softmax,reduction,18.9098308,25.191114781719847
+xl,512,forward,ok,final matmul,matrix_multiply,21.4780424,89.53223990692834
+xl,512,forward,ok,final matmul,copy,2.5111289,10.467760093071659
+xl,1024,forward,ok,all,matrix_multiply,1643.6828168999998,71.72480938532931
+xl,1024,forward,ok,all,elementwise,533.9006232,23.297633847600355
+xl,1024,forward,ok,all,copy,36.5899832,1.5966642368276753
+xl,1024,forward,ok,all,reduction,76.343084,3.3313563246438203
+xl,1024,forward,ok,all,index_gather_scatter,1.1351973,0.049536205598840984
+xl,1024,forward,ok,forward,matrix_multiply,1643.6828168999998,71.72480938532931
+xl,1024,forward,ok,forward,elementwise,533.9006232,23.297633847600355
+xl,1024,forward,ok,forward,copy,36.5899832,1.5966642368276753
+xl,1024,forward,ok,forward,reduction,76.343084,3.3313563246438203
+xl,1024,forward,ok,forward,index_gather_scatter,1.1351973,0.049536205598840984
+xl,1024,forward,ok,computing attention scores,matrix_multiply,82.7747129,35.818281305959424
+xl,1024,forward,ok,computing attention scores,elementwise,148.32155939999996,64.18171869404054
+xl,1024,forward,ok,computing softmax,elementwise,225.12061350000002,76.08619654500284
+xl,1024,forward,ok,computing softmax,reduction,70.7551481,23.913803454997176
+xl,1024,forward,ok,final matmul,matrix_multiply,98.5682232,95.29051976556869
+xl,1024,forward,ok,final matmul,copy,4.871472,4.709480234431316
