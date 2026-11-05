@@ -1,0 +1,41 @@
+{
+  "torch": "2.8.0+cu128",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 2080 Ti",
+  "input_shape": [
+    1024,
+    768
+  ],
+  "weight_shape": [
+    3072,
+    768
+  ],
+  "parameter_dtype": "torch.float32",
+  "input_dtype": "torch.float32",
+  "autocast_dtype": "torch.float16",
+  "output_dtype": "torch.float16",
+  "allow_fp16_reduced_precision_reduction": true,
+  "allow_fp16_accumulation": false,
+  "kernels": [
+    "void at::native::vectorized_elementwise_kernel<4, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+    "void at::native::vectorized_elementwise_kernel<4, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+    "void at::native::vectorized_elementwise_kernel<4, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::float16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+    "turing_fp16_s1688gemm_fp16_128x256_ldg8_relu_f2f_stages_32x1_tn"
+  ],
+  "loaded_cublas_libraries": [
+    "/root/miniconda3/lib/python3.12/site-packages/nvidia/cublas/lib/libcublas.so.12",
+    "/root/miniconda3/lib/python3.12/site-packages/nvidia/cublas/lib/libcublasLt.so.12"
+  ],
+  "disassembly": {
+    "architecture": "sm_75",
+    "library": "/root/miniconda3/lib/python3.12/site-packages/nvidia/cublas/lib/libcublasLt.so.12",
+    "kernel": "turing_fp16_s1688gemm_fp16_128x256_ldg8_relu_f2f_stages_32x1_tn",
+    "opcodes": {
+      "F2F.F32.F16": 4,
+      "HADD2.F32": 32,
+      "HMMA.1688.F32": 128
+    },
+    "capture_method": "PyTorch CUDA profiler launch trace + cuobjdump matching kernel from loaded library",
+    "ncu_status": "ERR_NVGPUCTRPERM: hardware counter capture unavailable"
+  }
+}

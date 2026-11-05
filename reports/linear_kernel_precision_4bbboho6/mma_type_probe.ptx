@@ -1,0 +1,26 @@
+.version 6.5
+.target sm_75
+.address_size 64
+
+// Compile-only probe of the PTX-to-SASS type mapping.
+.visible .entry mma_type_probe(.param .u64 output_ptr)
+{
+    .reg .b64 %ptr, %offset;
+    .reg .b32 %a<2>, %b, %thread_id;
+    .reg .f32 %c<4>, %d<4>;
+    ld.param.u64 %ptr, [output_ptr];
+    mov.u32 %thread_id, %tid.x;
+    mul.wide.u32 %offset, %thread_id, 16;
+    add.u64 %ptr, %ptr, %offset;
+    mov.b32 %a0, 0x3c003c00;
+    mov.b32 %a1, 0x3c003c00;
+    mov.b32 %b, 0x3c003c00;
+    mov.f32 %c0, 0f00000000;
+    mov.f32 %c1, 0f00000000;
+    mov.f32 %c2, 0f00000000;
+    mov.f32 %c3, 0f00000000;
+    mma.sync.aligned.m16n8k8.row.col.f32.f16.f16.f32
+        {%d0, %d1, %d2, %d3}, {%a0, %a1}, {%b}, {%c0, %c1, %c2, %c3};
+    st.global.v4.f32 [%ptr], {%d0, %d1, %d2, %d3};
+    ret;
+}
